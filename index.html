@@ -1058,7 +1058,7 @@
 					</div>
 					<div class="info-row">
 						<span class="info-label">អ្នករចនា/បង្កើត៖</span>
-						<span class="info-value" style="color: #d4af37;">យ៉ុង យាង (YONG yeang)</span>
+						<span class="info-value" style="color: #d4af37;">Toathmor (យ៉ុង យាង)</span>
 					</div>
 					<div class="info-row">
 						<span class="info-label">ប្រភេទម៉ូដអក្សរ៖</span>
@@ -1377,8 +1377,7 @@
 				const countTxt = document.getElementById("multiSelectCount");
 				
 				if (selectedFonts.length > 0) {
-					countTxt.innerText = `បានជ្រើសរើស: ${sel
-ectedFonts.length} ពុម្ព`;
+					countTxt.innerText = `បានជ្រើសរើស: ${selectedFonts.length} ពុម្ព`;
 					bar.classList.add("show");
 				} else {
 					bar.classList.remove("show");
@@ -1391,6 +1390,7 @@ ectedFonts.length} ពុម្ព`;
 				document.querySelectorAll(".font-card").forEach(card => card.classList.remove("selected"));
 				updateMultiSelectBar();
 			}
+
 			function sendMultiOrder() {
 				if (selectedFonts.length === 0) return;
 				selectedFonts.sort((a, b) => a.index - b.index);
