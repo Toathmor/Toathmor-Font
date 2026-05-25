@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toathmor - Font Tester</title>
+    <title>Toathmor - Font Tester Pro</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:ital,wght@0,100..700;1,100..700&family=Khmer+OS+Battambang&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;700&family=Khmer+OS+Battambang&display=swap" rel="stylesheet">
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
     <style>
@@ -95,7 +94,6 @@
             transition: 0.3s ease;
         }
 
-        .upload-section:hover { transform: translateY(-2px); opacity: 0.95; }
         #fontFile { display: none; }
 
         .font-info {
@@ -108,7 +106,6 @@
             border-radius: 30px;
         }
 
-        /* របារឧបករណ៍បញ្ជា */
         .controls-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -127,102 +124,38 @@
             gap: 5px;
         }
 
-        .control-group label {
-            font-size: 14px;
-            font-weight: 600;
-        }
+        .control-group label { font-size: 14px; font-weight: 600; }
+        .color-pickers { display: flex; gap: 10px; }
+        .color-box { display: flex; align-items: center; gap: 5px; font-size: 12px; }
 
-        .color-pickers {
-            display: flex;
-            gap: 10px;
-        }
-
-        .color-box {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 12px;
-        }
-
-        .palette-container {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-top: 5px;
-        }
-
+        .palette-container { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 5px; }
         .palette-btn {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            border: 2px solid #ffffff;
-            cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
-            transition: transform 0.2s;
-            position: relative;
-            overflow: hidden;
+            width: 32px; height: 32px; border-radius: 50%; border: 2px solid #ffffff;
+            cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.15); transition: transform 0.2s;
+            position: relative; overflow: hidden;
         }
-
         .palette-btn:hover { transform: scale(1.15); }
+        .palette-btn::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 50%; background: var(--p-text); }
+        .palette-btn::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; background: var(--p-bg); }
 
-        .palette-btn::before {
-            content: ''; position: absolute;
-            top: 0; left: 0; width: 100%; height: 50%;
-            background: var(--p-text);
-        }
-        .palette-btn::after {
-            content: ''; position: absolute;
-            bottom: 0; left: 0; width: 100%; height: 50%;
-            background: var(--p-bg);
-        }
-
-        /* ផ្នែកគ្រប់គ្រងអត្ថបទគំរូ និង Clear */
         .text-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            flex-wrap: wrap;
-            gap: 10px;
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 10px; flex-wrap: wrap; gap: 10px;
         }
 
-        .sample-buttons {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
+        .sample-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
         .sample-btn {
-            background: rgba(102, 126, 234, 0.1);
-            color: #667eea;
-            border: 1px solid rgba(102, 126, 234, 0.2);
-            padding: 6px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 13px;
-            font-family: inherit;
-            font-weight: 600;
-            transition: 0.2s;
+            background: rgba(102, 126, 234, 0.1); color: #667eea; border: 1px solid rgba(102, 126, 234, 0.2);
+            padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 13px; font-family: inherit; font-weight: 600; transition: 0.2s;
         }
-
         .sample-btn:hover { background: #667eea; color: #ffffff; }
 
         .clear-btn {
-            background: rgba(239, 68, 68, 0.1);
-            color: #ef4444;
-            border: 1px solid rgba(239, 68, 68, 0.2);
-            padding: 6px 14px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 13px;
-            font-family: inherit;
-            font-weight: 600;
-            transition: 0.2s;
+            background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2);
+            padding: 6px 14px; border-radius: 8px; cursor: pointer; font-size: 13px; font-family: inherit; font-weight: 600; transition: 0.2s;
         }
-
         .clear-btn:hover { background: #ef4444; color: #ffffff; }
 
-        /* ផ្ទាំង Preview ថ្មី (ប្រើ DIV ជំនួស TEXTAREA ដើម្បីកុំឱ្យដាច់អក្សរពេល Save) */
         .preview-wrapper {
             background: var(--textarea-bg);
             border-radius: 16px;
@@ -232,57 +165,28 @@
             transition: all 0.3s ease;
         }
 
-        .editable-preview {
+        textarea {
             width: 100%;
-            min-height: 250px;
-            max-height: 450px;
-            padding: 25px 25px 45px 25px; /* បន្ថែម Padding ខាងក្រោម (Bottom 45px) ការពារដាច់ជើងអក្សរ */
+            height: 250px;
+            padding: 20px;
             font-size: 32px;
             font-family: 'Kantumruy Pro', 'Khmer OS Battambang', sans-serif;
             color: var(--textarea-text);
             background: transparent;
+            border: none;
+            resize: none;
             box-sizing: border-box;
             outline: none;
-            line-height: 1.6;
-            letter-spacing: 0px;
-            overflow-y: auto;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            transition: color 0.3s, background-color 0.3s;
+            line-height: 1.7;
         }
 
-        /* បង្ហាញ Placeholder សម្រាប់ទម្រង់ Div Contenteditable */
-        .editable-preview:empty:before {
-            content: attr(placeholder);
-            color: #94a3b8;
-            cursor: text;
-        }
-
-        /* របារប៊ូតុងរក្សាទុក និង Share */
-        .action-bar {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
+        .action-bar { display: flex; gap: 10px; flex-wrap: wrap; }
         .action-btn {
-            flex: 1;
-            min-width: 120px;
-            padding: 12px;
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: 600;
-            font-family: inherit;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: 0.2s;
-            background: var(--border-color);
-            color: var(--text-main);
+            flex: 1; min-width: 120px; padding: 12px; border: none; border-radius: 12px;
+            cursor: pointer; font-weight: 600; font-family: inherit; display: flex;
+            align-items: center; justify-content: center; gap: 8px; transition: 0.2s;
+            background: var(--border-color); color: var(--text-main);
         }
-
         .action-btn.primary { background: #3b82f6; color: white; }
         .action-btn:hover { opacity: 0.9; transform: scale(1.02); }
     </style>
@@ -291,8 +195,10 @@
 
 <div class="container">
     <div class="header-bar">
-        <div class="brand-name">Toathmor</div>
+        <div class="brand-name">តារាងតេស្ដពុម្ពអក្សរ</div>
+      <p> (Y)
         <button class="theme-toggle" id="themeBtn">🌙 Dark Mode</button>
+        
     </div>
     
     <div class="upload-section" onclick="document.getElementById('fontFile').click()">
@@ -307,17 +213,13 @@
             <label>ទំហំអក្សរ: <span id="sizeVal">32px</span></label>
             <input type="range" id="fontSize" min="16" max="100" value="32">
         </div>
-
         <div class="control-group">
-            <label>គម្លាតបន្ទាត់: <span id="lineVal">1.6</span></label>
-            <input type="range" id="lineSpacing" min="1" max="3" step="0.1" value="1.6">
+            <label>គម្លាតបន្ទាត់: <span id="lineVal">1.7</span></label>
+            <input type="range" id="lineSpacing" min="1" max="3" step="0.1" value="1.7">
         </div>
-
-        <div class="control-group">
-            <label>គម្លាតតួអក្សរ: <span id="letterVal">0px</span></label>
-            <input type="range" id="letterSpacing" min="-2" max="15" step="0.5" value="0">
+        <div class="control-group" style="display:none;">
+            <input type="range" id="letterSpacing" min="0" max="0" value="0">
         </div>
-
         <div class="control-group">
             <label>កំណត់ពណ៌ / ពណ៌រហ័ស</label>
             <div class="color-pickers">
@@ -325,12 +227,12 @@
                 <div class="color-box"><input type="color" id="bgColor" value="#ffffff"> ផ្ទៃក្រោយ</div>
             </div>
             <div class="palette-container">
-                <div class="palette-btn" style="--p-text: #1e293b; --p-bg: #ffffff;" onclick="setQuickColor('#1e293b', '#ffffff')" title="ស-ខ្មៅ"></div>
-                <div class="palette-btn" style="--p-text: #ffffff; --p-bg: #1e293b;" onclick="setQuickColor('#ffffff', '#1e293b')" title="ខ្មៅ-ស"></div>
-                <div class="palette-btn" style="--p-text: #facc15; --p-bg: #1e3a8a;" onclick="setQuickColor('#facc15', '#1e3a8a')" title="ខៀវ-លឿង"></div>
-                <div class="palette-btn" style="--p-text: #ffffff; --p-bg: #15803d;" onclick="setQuickColor('#ffffff', '#15803d')" title="បៃតង-ស"></div>
-                <div class="palette-btn" style="--p-text: #ffffff; --p-bg: #b91c1c;" onclick="setQuickColor('#ffffff', '#b91c1c')" title="ក្រហម-ស"></div>
-                <div class="palette-btn" style="--p-text: #2563eb; --p-bg: #fef08a;" onclick="setQuickColor('#2563eb', '#fef08a')" title="លឿង-ខៀវ"></div>
+                <div class="palette-btn" style="--p-text: #1e293b; --p-bg: #ffffff;" onclick="setQuickColor('#1e293b', '#ffffff')"></div>
+                <div class="palette-btn" style="--p-text: #ffffff; --p-bg: #1e293b;" onclick="setQuickColor('#ffffff', '#1e293b')"></div>
+                <div class="palette-btn" style="--p-text: #facc15; --p-bg: #1e3a8a;" onclick="setQuickColor('#facc15', '#1e3a8a')"></div>
+                <div class="palette-btn" style="--p-text: #ffffff; --p-bg: #15803d;" onclick="setQuickColor('#ffffff', '#15803d')"></div>
+                <div class="palette-btn" style="--p-text: #ffffff; --p-bg: #b91c1c;" onclick="setQuickColor('#ffffff', '#b91c1c')"></div>
+                <div class="palette-btn" style="--p-text: #2563eb; --p-bg: #fef08a;" onclick="setQuickColor('#2563eb', '#fef08a')"></div>
             </div>
         </div>
     </div>
@@ -346,7 +248,10 @@
     </div>
 
     <div class="preview-wrapper" id="previewWrapper">
-        <div id="textPreview" class="editable-preview" contenteditable="true" placeholder="សូមវាយអក្សរខ្មែរនៅទីនេះ ដើម្បីតេស្តមើល..."></div>
+        <textarea id="textPreview" placeholder="សូមវាយអក្សរខ្មែរនៅទីនេះ ដើម្បីតេស្តមើល...">អនិច្ចាតោថ្មលោកកសាង 
+មើលថាថាងយ៉ាងរស់ស្ទុះប្រែប្រាយ
+ឥឡូវមកធ្លាយធ្លាក់បាក់ខ្ចាត់ខ្ចាយ
+ស្ដាយអើយស្ដាយមិនគួរមកពិការ។</textarea>
     </div>
 
     <div class="action-bar">
@@ -365,41 +270,32 @@
     
     const fontSize = document.getElementById('fontSize');
     const lineSpacing = document.getElementById('lineSpacing');
-    const letterSpacing = document.getElementById('letterSpacing');
     const textColor = document.getElementById('textColor');
     const bgColor = document.getElementById('bgColor');
 
     const sizeVal = document.getElementById('sizeVal');
     const lineVal = document.getElementById('lineVal');
-    const letterVal = document.getElementById('letterVal');
+
+    let activeFontName = "'Kantumruy Pro', 'Khmer OS Battambang', sans-serif";
 
     const samples = {
-        abc: "ក ខ គ ឃ ង ច ឆ ជ ឈ ញ ដ ឋ ឌ ឍ ណ ត ថ ទ ធ ន ប ផ ព ភ ម យ រ ល វ ស ហ ឡ អ\nស្រៈនិស្ស័យ៖ ា ិ ី ឹ ឺ ុ ូ ួ ើ ឿ ៀ េ ែ ៃ ោ ៅ ុំ ំ ាំ ះ ុះ េះ ោះ",
-        proverb: "ចំណេះវិជ្ជាវិសេសវិសាលណាស់ ប្រសើរលើសទ្រព្យធនទាំងពួង។\nចេះរៀនចេះគិត ជិតរៀបការឆាប់ ចេះស្តាប់ចេះរៀប គង់មានទ្រព្យធន។",
-        poem: "ស្រឡាញ់ចំណេះ ត្រូវខំរៀនសូត្រ\nកុំបីអួតកូត ខ្ជិលច្រអូសឡើយ\nអនាគតថ្លា ភ្លឺស្វាងកន្លងហើយ\nបានជាកូនអើយ ត្រូវតស៊ូ។"
+        abc: "ក ខ គ ឃ ង ច ឆ ជ ឈ ញ ដ ឋ ឌ ឍ ណ ត ថ ទ ធ ន ប ផ ព ភ ម យ រ ល វ ស ហ ឡ អ\n",
+        proverb: "នគរថ្កើប្លែក សប្បាយតែភ្នែក ក្នុងចិត្តរងកម្ម...។\nតស៊ូគង់បានសម្រេច វិជ្ជាប្ដូរផ្ដាច់ដោយការសន្សំ។",
+        poem: "អនិច្ចាតោថ្មលោកកសាង\nមើលថាថាងយ៉ាងរស់ស្ទុះប្រែប្រាយ\nឥឡូវមកធ្លាយធ្លាក់បាក់ខ្ចាត់ខ្ចាយ\nស្ដាយអើយស្ដាយមិនគួរមកពិការ។"
     };
 
-    function insertSample(type) {
-        textPreview.innerText = samples[type];
-    }
-
-    clearBtn.addEventListener('click', () => {
-        textPreview.innerText = '';
-        textPreview.focus();
-    });
+    function insertSample(type) { textPreview.value = samples[type]; }
+    clearBtn.addEventListener('click', () => { textPreview.value = ''; textPreview.focus(); });
 
     fontSize.addEventListener('input', (e) => { textPreview.style.fontSize = e.target.value + 'px'; sizeVal.textContent = e.target.value + 'px'; });
     lineSpacing.addEventListener('input', (e) => { textPreview.style.lineHeight = e.target.value; lineVal.textContent = e.target.value; });
-    letterSpacing.addEventListener('input', (e) => { textPreview.style.letterSpacing = e.target.value + 'px'; letterVal.textContent = e.target.value + 'px'; });
 
     textColor.addEventListener('input', (e) => { textPreview.style.color = e.target.value; });
     bgColor.addEventListener('input', (e) => { updateBackground(e.target.value); });
 
     function setQuickColor(txtColor, backColor) {
-        textColor.value = txtColor;
-        bgColor.value = backColor;
-        textPreview.style.color = txtColor;
-        updateBackground(backColor);
+        textColor.value = txtColor; bgColor.value = backColor;
+        textPreview.style.color = txtColor; updateBackground(backColor);
     }
 
     function updateBackground(color) {
@@ -417,7 +313,8 @@
                 const customFont = new FontFace(fontName, `url(${fontUrl})`);
                 customFont.load().then(function(loadedFont) {
                     document.fonts.add(loadedFont);
-                    textPreview.style.fontFamily = fontName + ", 'Kantumruy Pro', sans-serif";
+                    activeFontName = fontName;
+                    textPreview.style.fontFamily = fontName;
                     fontInfo.style.color = '#10b981';
                     fontInfo.textContent = `បានភ្ជាប់ពុម្ពអក្សរ៖ "${file.name}" រួចរាល់!`;
                 }).catch(function(error) {
@@ -429,49 +326,84 @@
         }
     });
 
+    // 🚀 ប្រព័ន្ធគូរអក្សរផ្ទាល់លើ Canvas ធានាការរក្សាទុករូបភាពបានស្អាត ១០០% មិនរត់អក្សរ
+    function drawTextToCanvas(callback) {
+        document.fonts.ready.then(() => {
+            const text = textPreview.value;
+            const lines = text.split('\n');
+            
+            const currentFontSize = parseInt(fontSize.value);
+            const currentLineHeight = parseFloat(lineSpacing.value);
+            const currentTextColor = textColor.value;
+            const currentBgColor = bgColor.value;
+
+            // បង្កើតទំហំដង់ស៊ីតេរូបភាពកម្រិតច្បាស់ (Retina / HD Display)
+            const baseWidth = 800;
+            const baseHeight = Math.max(350, (lines.length * currentFontSize * currentLineHeight) + 100);
+            const scale = 3; // គុណភាពច្បាស់ជាងមុន 3 ដង
+
+            const canvas = document.createElement('canvas');
+            canvas.width = baseWidth * scale;
+            canvas.height = baseHeight * scale;
+            
+            const ctx = canvas.getContext('2d');
+            ctx.scale(scale, scale);
+
+            // ចាក់ពណ៌ផ្ទៃក្រោយ
+            ctx.fillStyle = currentBgColor;
+            ctx.fillRect(0, 0, baseWidth, baseHeight);
+
+            // កំណត់ Font ចេញពីប្រព័ន្ធលាក់របស់ Browser ផ្ទាល់
+            ctx.textBaseline = "top";
+            ctx.fillStyle = currentTextColor;
+            ctx.font = `normal ${currentFontSize}px ${activeFontName}, 'Kantumruy Pro', sans-serif`;
+
+            // គូរអក្សរខ្មែរម្តងមួយជួរៗដោយរក្សាទុកជើងយូនីកូដទាំងស្រុង
+            let startY = 50;
+            lines.forEach((line) => {
+                ctx.fillText(line, 40, startY);
+                startY += (currentFontSize * currentLineHeight);
+            });
+
+            // ផ្ញើរូបភាពដែលបានគូររួចទៅមុខងារទាញយក
+            const pngUrl = canvas.toDataURL('image/png');
+            callback(pngUrl);
+        });
+    }
+
+    // ប៊ូតុងរក្សាទុករូបភាព PNG
+    document.getElementById('saveImgBtn').addEventListener('click', () => {
+        drawTextToCanvas((pngUrl) => {
+            const link = document.createElement('a');
+            link.download = 'toathmor-font-test.png';
+            link.href = pngUrl;
+            link.click();
+        });
+    });
+
+    // ប៊ូតុងរក្សាទុកជា PDF
+    document.getElementById('savePdfBtn').addEventListener('click', () => {
+        drawTextToCanvas((pngUrl) => {
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF('l', 'mm', 'a4');
+            pdf.addImage(pngUrl, 'PNG', 10, 15, 277, 140);
+            pdf.save('toathmor-font-test.pdf');
+        });
+    });
+
+    // មុខងារ Dark Mode / Light Mode
     const themeBtn = document.getElementById('themeBtn');
     themeBtn.addEventListener('click', () => {
         const currentTheme = document.documentElement.getAttribute('data-theme');
         if (currentTheme === 'dark') {
             document.documentElement.removeAttribute('data-theme');
             themeBtn.textContent = '🌙 Dark Mode';
-            textPreview.style.color = '#1e293b';
-            updateBackground('#ffffff');
-            textColor.value = '#1e293b';
-            bgColor.value = '#ffffff';
+            setQuickColor('#1e293b', '#ffffff');
         } else {
             document.documentElement.setAttribute('data-theme', 'dark');
             themeBtn.textContent = '☀️ Light Mode';
-            textPreview.style.color = '#f8fafc';
-            updateBackground('#1e293b');
-            textColor.value = '#f8fafc';
-            bgColor.value = '#1e293b';
+            setQuickColor('#f8fafc', '#1e293b');
         }
-    });
-
-    // មុខងារ Save ជារូបភាព (កែសម្រួលជម្រើសរបស់ html2canvas ឱ្យច្បាស់ និងមិនដាច់គែម)
-    document.getElementById('saveImgBtn').addEventListener('click', () => {
-        html2canvas(previewWrapper, {
-            scale: 2, // បង្កើនគុណភាពរូបភាពឱ្យកាន់តែច្បាស់ (HD)
-            useCORS: true,
-            backgroundColor: null
-        }).then(canvas => {
-            const link = document.createElement('a');
-            link.download = 'toathmor-font-test.png';
-            link.href = canvas.toDataURL('image/png');
-            link.click();
-        });
-    });
-
-    // មុខងារ Save ជា PDF
-    document.getElementById('savePdfBtn').addEventListener('click', () => {
-        const { jsPDF } = window.jspdf;
-        html2canvas(previewWrapper, { scale: 2 }).then(canvas => {
-            const imgData = canvas.toDataURL('image/png');
-            const pdf = new jsPDF('l', 'mm', 'a4');
-            pdf.addImage(imgData, 'PNG', 10, 10, 270, 130);
-            pdf.save('toathmor-font-test.pdf');
-        });
     });
 
     // មុខងារ Share
