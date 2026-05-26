@@ -188,7 +188,6 @@
         }
         .clear-btn:hover { background: #ef4444; color: #ffffff; }
 
-        /* 🌟 កែប្រែប្រអប់ Preview ឱ្យរីកធំតាមអក្សរស្វ័យប្រវត្ត (Dynamic Auto-Growing Box) */
         .preview-wrapper {
             background: var(--textarea-bg);
             border-radius: 16px;
@@ -196,11 +195,10 @@
             overflow: hidden;
             margin-bottom: 20px;
             transition: background-color 0.3s ease, border-color 0.3s ease;
-            min-height: 150px; /* កម្ពស់ទាបបំផុត */
-            height: auto; /* អនុញ្ញាតឱ្យរីកកម្ពស់វែងទៅក្រោមសេរី */
+            min-height: 150px;
+            height: auto;
         }
 
-        /* ប្រើប្រាស់ Contenteditable Div ជំនួស Textarea ចាស់ */
         .editable-preview {
             width: 100%;
             min-height: 150px;
@@ -214,8 +212,8 @@
             box-sizing: border-box;
             outline: none;
             line-height: 1.7;
-            white-space: pre-wrap; /* រក្សាចុះបន្ទាត់ */
-            word-wrap: break-word; /* កាត់ពាក្យពេលវែងពេក */
+            white-space: pre-wrap;
+            word-wrap: break-word;
         }
 
         .action-bar { display: flex; gap: 10px; flex-wrap: wrap; }
@@ -324,7 +322,13 @@
     function insertSample(type) { textPreview.innerText = samples[type]; }
     clearBtn.addEventListener('click', () => { textPreview.innerText = ''; textPreview.focus(); });
 
-    // រក្សាប្រព័ន្ធបច្ចុប្បន្នភាពទំហំ និងគម្លាតបន្ទាត់
+    // 🌟 មុខងារពិសេស៖ លាងសម្អាតកូដទម្រង់ពុម្ពអក្សរដែល Copy មកពី Word, Telegram ចោលស្វ័យប្រវត្ត
+    textPreview.addEventListener('paste', function(e) {
+        e.preventDefault(); // ហាមឃាត់មិនឱ្យយកស្ទីលចាស់មកជាមួយ
+        const text = (e.originalEvent || e).clipboardData.getData('text/plain'); // យកតែសាច់អក្សរសុទ្ធ
+        document.execCommand('insertText', false, text); // បញ្ចូលអក្សរចូលប្រអប់តេស្ត
+    });
+
     fontSize.addEventListener('input', (e) => { 
         textPreview.style.fontSize = e.target.value + 'px'; 
         sizeVal.textContent = e.target.value + 'px'; 
@@ -370,10 +374,8 @@
         }
     });
 
-    // មុខងារវាស់វែង និងគូររូបភាពចេញពី Div Contenteditable
     function drawTextToCanvas(callback) {
         document.fonts.ready.then(() => {
-            // ប្រើប្រាស់ innerText ដើម្បីទទួលបានអត្ថបទ និងការចុះបន្ទាត់ពី Div
             const text = textPreview.innerText;
             const lines = text.split('\n');
             
