@@ -199,28 +199,37 @@
             height: auto;
         }
 
-        /* 🌟 របារបញ្ជា Align Left / Center / Right */
+        /* 🌟 កែសម្រួលស្ទីលរបារ និងពុម្ពអក្សរតម្រឹម Align ឱ្យទៅជាស្តង់ដា */
         .align-toolbar {
             display: flex;
-            background: rgba(0,0,0,0.05);
-            padding: 6px 12px;
-            gap: 5px;
+            background: rgba(0, 0, 0, 0.03);
+            padding: 8px 12px;
+            gap: 6px;
             border-bottom: 1px solid var(--border-color);
         }
         .align-btn {
             background: transparent;
             border: none;
-            padding: 6px 12px;
-            border-radius: 6px;
+            padding: 6px 14px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 13px;
-            font-weight: 600;
+            font-weight: 500;
+            font-family: 'Kantumruy Pro', sans-serif; /* កំណត់ពុម្ពអក្សរស្ដង់ដា */
             color: var(--text-main);
-            transition: 0.2s;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
-        .align-btn:hover, .align-btn.active {
+        .align-btn:hover {
+            background: rgba(79, 70, 229, 0.1);
+            color: #4f46e5;
+        }
+        .align-btn.active {
             background: #4f46e5;
             color: white;
+            font-weight: 600;
         }
 
         .editable-preview {
@@ -238,7 +247,7 @@
             line-height: 1.7;
             white-space: pre-wrap;
             word-wrap: break-word;
-            text-align: left; /* តម្រឹមលំនាំដើមទៅឆ្វេង */
+            text-align: left;
             transition: text-align 0.2s ease;
         }
 
@@ -310,14 +319,14 @@
 
     <div class="preview-wrapper" id="previewWrapper">
         <div class="align-toolbar">
-            <button class="align-btn active" onclick="setTextAlign('left', this)">⬅️ ឆ្វេង (Left)</button>
-            <button class="align-btn" onclick="setTextAlign('center', this)">🔲 កណ្តាល (Center)</button>
-            <button class="align-btn" onclick="setTextAlign('right', this)">➡️ ស្តាំ (Right)</button>
+            <button class="align-btn active" onclick="setTextAlign('left', this)">⬅️ ឆ្វេង</button>
+            <button class="align-btn" onclick="setTextAlign('center', this)">🔲 កណ្តាល</button>
+            <button class="align-btn" onclick="setTextAlign('right', this)">➡️ ស្តាំ</button>
         </div>
         <div class="editable-preview" id="textPreview" contenteditable="true">អនិច្ចាតោថ្មលោកកសាង
 មើលថាថាងយ៉ាងរស់ស្ទុះប្រែប្រាយ
 ឥឡូវមកធ្លាយធ្លាក់បាក់ខ្ចាត់ខ្ចាយ      
-ស្តាយអើយស្តាយមិនគួរមកពិការ។</div>
+ស្តាយអើយស្តាយមិនគួរមកពិការ White-Space។</div>
     </div>
 
     <div class="action-bar">
@@ -343,7 +352,7 @@
     const lineVal = document.getElementById('lineVal');
 
     let activeFontName = "'Kantumruy Pro', 'Khmer OS Battambang', sans-serif";
-    let currentAlign = "left"; // រក្សាទុកស្ថានភាព Align (left, center, right)
+    let currentAlign = "left";
 
     const samples = {
         abc: "ក ខ គ ឃ ង ច ឆ ជ ឈ ញ ដ ឋ ឌ ឍ ណ ត ថ ទ ធ ន ប ផ ព ភ ម យ រ ល វ ស ហ ឡ អ",
@@ -354,12 +363,9 @@
     function insertSample(type) { textPreview.innerText = samples[type]; }
     clearBtn.addEventListener('click', () => { textPreview.innerText = ''; textPreview.focus(); });
 
-    // 🌟 មុខងារប្តូរ Align ឆ្វេង កណ្តាល ស្តាំ
     function setTextAlign(alignType, btnElement) {
         currentAlign = alignType;
         textPreview.style.textAlign = alignType;
-        
-        // ផ្លាស់ប្តូរពណ៌ Active ប៊ូតុង
         document.querySelectorAll('.align-btn').forEach(btn => btn.classList.remove('active'));
         btnElement.classList.add('active');
     }
@@ -415,7 +421,6 @@
         }
     });
 
-    // 🌟 កែសម្រួលប្រព័ន្ធគូរ Canvas ឲ្យគាំទ្រការ Align ពេល Export ចេញជារូបភាព/PDF
     function drawTextToCanvas(callback) {
         document.fonts.ready.then(() => {
             const text = textPreview.innerText;
@@ -459,15 +464,14 @@
 
             let startY = paddingY;
             lines.forEach((line) => {
-                let drawX = paddingX; // លំនាំដើមឆ្វេង Left Align
-                const lineWidth = ctx.measureText(line).width;
+                let drawX = paddingX;
 
                 if (currentAlign === "center") {
                     ctx.textAlign = "center";
-                    drawX = baseWidth / 2; // ប្តូរទៅចំកណ្តាលផ្ទាំង Canvas
+                    drawX = baseWidth / 2;
                 } else if (currentAlign === "right") {
                     ctx.textAlign = "right";
-                    drawX = baseWidth - paddingX; // រុញទៅកៀនខាងស្តាំ Canvas
+                    drawX = baseWidth - paddingX;
                 } else {
                     ctx.textAlign = "left";
                 }
