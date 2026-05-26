@@ -199,6 +199,30 @@
             height: auto;
         }
 
+        /* 🌟 របារបញ្ជា Align Left / Center / Right */
+        .align-toolbar {
+            display: flex;
+            background: rgba(0,0,0,0.05);
+            padding: 6px 12px;
+            gap: 5px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .align-btn {
+            background: transparent;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-main);
+            transition: 0.2s;
+        }
+        .align-btn:hover, .align-btn.active {
+            background: #4f46e5;
+            color: white;
+        }
+
         .editable-preview {
             width: 100%;
             min-height: 150px;
@@ -214,6 +238,8 @@
             line-height: 1.7;
             white-space: pre-wrap;
             word-wrap: break-word;
+            text-align: left; /* តម្រឹមលំនាំដើមទៅឆ្វេង */
+            transition: text-align 0.2s ease;
         }
 
         .action-bar { display: flex; gap: 10px; flex-wrap: wrap; }
@@ -283,6 +309,11 @@
     </div>
 
     <div class="preview-wrapper" id="previewWrapper">
+        <div class="align-toolbar">
+            <button class="align-btn active" onclick="setTextAlign('left', this)">⬅️ ឆ្វេង (Left)</button>
+            <button class="align-btn" onclick="setTextAlign('center', this)">🔲 កណ្តាល (Center)</button>
+            <button class="align-btn" onclick="setTextAlign('right', this)">➡️ ស្តាំ (Right)</button>
+        </div>
         <div class="editable-preview" id="textPreview" contenteditable="true">អនិច្ចាតោថ្មលោកកសាង
 មើលថាថាងយ៉ាងរស់ស្ទុះប្រែប្រាយ
 ឥឡូវមកធ្លាយធ្លាក់បាក់ខ្ចាត់ខ្ចាយ      
@@ -312,6 +343,7 @@
     const lineVal = document.getElementById('lineVal');
 
     let activeFontName = "'Kantumruy Pro', 'Khmer OS Battambang', sans-serif";
+    let currentAlign = "left"; // រក្សាទុកស្ថានភាព Align (left, center, right)
 
     const samples = {
         abc: "ក ខ គ ឃ ង ច ឆ ជ ឈ ញ ដ ឋ ឌ ឍ ណ ត ថ ទ ធ ន ប ផ ព ភ ម យ រ ល វ ស ហ ឡ អ",
@@ -322,11 +354,20 @@
     function insertSample(type) { textPreview.innerText = samples[type]; }
     clearBtn.addEventListener('click', () => { textPreview.innerText = ''; textPreview.focus(); });
 
-    // 🌟 មុខងារពិសេស៖ លាងសម្អាតកូដទម្រង់ពុម្ពអក្សរដែល Copy មកពី Word, Telegram ចោលស្វ័យប្រវត្ត
+    // 🌟 មុខងារប្តូរ Align ឆ្វេង កណ្តាល ស្តាំ
+    function setTextAlign(alignType, btnElement) {
+        currentAlign = alignType;
+        textPreview.style.textAlign = alignType;
+        
+        // ផ្លាស់ប្តូរពណ៌ Active ប៊ូតុង
+        document.querySelectorAll('.align-btn').forEach(btn => btn.classList.remove('active'));
+        btnElement.classList.add('active');
+    }
+
     textPreview.addEventListener('paste', function(e) {
-        e.preventDefault(); // ហាមឃាត់មិនឱ្យយកស្ទីលចាស់មកជាមួយ
-        const text = (e.originalEvent || e).clipboardData.getData('text/plain'); // យកតែសាច់អក្សរសុទ្ធ
-        document.execCommand('insertText', false, text); // បញ្ចូលអក្សរចូលប្រអប់តេស្ត
+        e.preventDefault();
+        const text = (e.originalEvent || e).clipboardData.getData('text/plain');
+        document.execCommand('insertText', false, text);
     });
 
     fontSize.addEventListener('input', (e) => { 
@@ -374,6 +415,7 @@
         }
     });
 
+    // 🌟 កែសម្រួលប្រព័ន្ធគូរ Canvas ឲ្យគាំទ្រការ Align ពេល Export ចេញជារូបភាព/PDF
     function drawTextToCanvas(callback) {
         document.fonts.ready.then(() => {
             const text = textPreview.innerText;
@@ -397,7 +439,7 @@
             const paddingX = 40;
             const paddingY = 40;
             
-            const baseWidth = Math.max(200, maxLineWidth + (paddingX * 2));
+            const baseWidth = Math.max(300, maxLineWidth + (paddingX * 2));
             const baseHeight = (lines.length * currentFontSize * currentLineHeight) + (paddingY * 2);
             const scale = 3; 
 
@@ -417,7 +459,20 @@
 
             let startY = paddingY;
             lines.forEach((line) => {
-                ctx.fillText(line, paddingX, startY);
+                let drawX = paddingX; // លំនាំដើមឆ្វេង Left Align
+                const lineWidth = ctx.measureText(line).width;
+
+                if (currentAlign === "center") {
+                    ctx.textAlign = "center";
+                    drawX = baseWidth / 2; // ប្តូរទៅចំកណ្តាលផ្ទាំង Canvas
+                } else if (currentAlign === "right") {
+                    ctx.textAlign = "right";
+                    drawX = baseWidth - paddingX; // រុញទៅកៀនខាងស្តាំ Canvas
+                } else {
+                    ctx.textAlign = "left";
+                }
+
+                ctx.fillText(line, drawX, startY);
                 startY += (currentFontSize * currentLineHeight);
             });
 
@@ -429,7 +484,7 @@
     document.getElementById('saveImgBtn').addEventListener('click', () => {
         drawTextToCanvas((pngUrl) => {
             const link = document.createElement('a');
-            link.download = 'toathmor-font-auto-fit.png';
+            link.download = 'toathmor-font-align.png';
             link.href = pngUrl;
             link.click();
         });
@@ -441,7 +496,7 @@
             const orientation = width > height ? 'l' : 'p';
             const pdf = new jsPDF(orientation, 'px', [width, height]);
             pdf.addImage(pngUrl, 'PNG', 0, 0, width, height);
-            pdf.save('toathmor-font-auto-fit.pdf');
+            pdf.save('toathmor-font-align.pdf');
         });
     });
 
