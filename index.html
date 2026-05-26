@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>តារាងតេស្តពុម្ពអក្សរ - Font Tester</title>
+    <title>តារាងតេស្តពុម្ពអក្សរ - Font Tester Pro</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;500;700&family=Khmer+OS+Battambang&display=swap" rel="stylesheet">
@@ -18,6 +18,8 @@
             --border-color: #e2e8f0;
             --textarea-bg: #ffffff;
             --textarea-text: #1e293b;
+            --primary-color: #4f46e5;
+            --p-text-color: rgba(255, 255, 255, 0.9);
         }
 
         [data-theme="dark"] {
@@ -27,6 +29,8 @@
             --border-color: #334155;
             --textarea-bg: #1e293b;
             --textarea-text: #f8fafc;
+            --primary-color: #818cf8;
+            --p-text-color: rgba(0, 0, 0, 0.85);
         }
 
         body {
@@ -188,55 +192,60 @@
         }
         .clear-btn:hover { background: #ef4444; color: #ffffff; }
 
+        /* 🌟 រចនាផ្ទាំង Preview និង Align Toolbar ថ្មីឱ្យមានរបៀបរៀបរយឥតខ្ចោះ */
         .preview-wrapper {
             background: var(--textarea-bg);
             border-radius: 16px;
             border: 2px solid var(--border-color);
             overflow: hidden;
             margin-bottom: 20px;
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-            min-height: 150px;
-            height: auto;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.02);
+            display: flex;
+            flex-direction: column;
         }
 
-        /* 🌟 កែសម្រួលស្ទីលរបារ និងពុម្ពអក្សរតម្រឹម Align ឱ្យទៅជាស្តង់ដា */
         .align-toolbar {
             display: flex;
-            background: rgba(0, 0, 0, 0.03);
+            background: rgba(0,0,0,0.03);
             padding: 8px 12px;
             gap: 6px;
             border-bottom: 1px solid var(--border-color);
+            justify-content: flex-start;
+            flex-shrink: 0;
         }
+        
         .align-btn {
             background: transparent;
             border: none;
-            padding: 6px 14px;
+            padding: 8px 16px;
             border-radius: 8px;
             cursor: pointer;
             font-size: 13px;
             font-weight: 500;
-            font-family: 'Kantumruy Pro', sans-serif; /* កំណត់ពុម្ពអក្សរស្ដង់ដា */
             color: var(--text-main);
             transition: all 0.2s ease;
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 6px;
+            font-family: 'Kantumruy Pro', sans-serif;
         }
         .align-btn:hover {
             background: rgba(79, 70, 229, 0.1);
-            color: #4f46e5;
+            color: var(--primary-color);
         }
         .align-btn.active {
-            background: #4f46e5;
-            color: white;
+            background: var(--primary-color);
+            color: var(--p-text-color);
             font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .editable-preview {
             width: 100%;
-            min-height: 150px;
+            min-height: 180px;
             height: auto;
-            padding: 20px;
+            padding: 20px 20px 40px 20px;
             font-size: 32px;
             font-family: 'Kantumruy Pro', 'Khmer OS Battambang', sans-serif;
             color: var(--textarea-text);
@@ -245,10 +254,19 @@
             box-sizing: border-box;
             outline: none;
             line-height: 1.7;
+            letter-spacing: 0px;
             white-space: pre-wrap;
             word-wrap: break-word;
             text-align: left;
             transition: text-align 0.2s ease;
+            overflow-y: auto;
+        }
+
+        /* បង្ហាញ Placeholder សម្រាប់Contenteditable Div */
+        .editable-preview:empty:before {
+            content: attr(placeholder);
+            color: #94a3b8;
+            cursor: text;
         }
 
         .action-bar { display: flex; gap: 10px; flex-wrap: wrap; }
@@ -319,14 +337,23 @@
 
     <div class="preview-wrapper" id="previewWrapper">
         <div class="align-toolbar">
-            <button class="align-btn active" onclick="setTextAlign('left', this)">⬅️ ឆ្វេង</button>
-            <button class="align-btn" onclick="setTextAlign('center', this)">🔲 កណ្តាល</button>
-            <button class="align-btn" onclick="setTextAlign('right', this)">➡️ ស្តាំ</button>
+            <button class="align-btn active" id="alignLeft" onclick="setTextAlign('left')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="17" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="17" y1="18" x2="3" y2="18"></line></svg>
+                ឆ្វេង
+            </button>
+            <button class="align-btn" id="alignCenter" onclick="setTextAlign('center')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="10" x2="6" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="18" y1="18" x2="6" y2="18"></line></svg>
+                កណ្តាល
+            </button>
+            <button class="align-btn" id="alignRight" onclick="setTextAlign('right')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" y1="10" x2="7" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="21" y1="18" x2="7" y2="18"></line></svg>
+                ស្តាំ
+            </button>
         </div>
-        <div class="editable-preview" id="textPreview" contenteditable="true">អនិច្ចាតោថ្មលោកកសាង
+        <div class="editable-preview" id="textPreview" contenteditable="true" placeholder="សូមវាយអក្សរខ្មែរនៅទីនេះ ដើម្បីតេស្តមើល...">អនិច្ចាតោថ្មលោកកសាង
 មើលថាថាងយ៉ាងរស់ស្ទុះប្រែប្រាយ
 ឥឡូវមកធ្លាយធ្លាក់បាក់ខ្ចាត់ខ្ចាយ      
-ស្តាយអើយស្តាយមិនគួរមកពិការ White-Space។</div>
+ស្តាយអើយស្តាយមិនគួរមកពិការ។</div>
     </div>
 
     <div class="action-bar">
@@ -356,20 +383,24 @@
 
     const samples = {
         abc: "ក ខ គ ឃ ង ច ឆ ជ ឈ ញ ដ ឋ ឌ ឍ ណ ត ថ ទ ធ ន ប ផ ព ភ ម យ រ ល វ ស ហ ឡ អ",
-        proverb: "នគរថ្កើងប្លែក សប្បាយតែភ្នែក ក្នុងចិត្តរងកម្ម。\nវិជ្ជាជាទ្រព្យគាប់ចិន្តា。\nជីវិតគឺជាការតស៊ូ。",
-        poem: "អនិច្ចាតោថ្មលោកកសាង\nមើលថាថាងយ៉ាងរស់ស្ទុះប្រែប្រាយ\nឥឡូវមកធ្លាយធ្លាក់បាក់ខ្ចាត់ខ្ចាយ      \nស្តាយអើយស្តាយមិនគួរមកពិការ。"
+        proverb: "នគរថ្កើងប្លែក សប្បាយតែភ្នែក ក្នុងចិត្តរងកម្ម។ \nវិជ្ជាជាទ្រព្យគាប់ចិន្តា។ \nជីវិតគឺជាការតស៊ូ។ ",
+        poem: "អនិច្ចាតោថ្មលោកកសាង\nមើលថាថាងយ៉ាងរស់ស្ទុះប្រែប្រាយ\nឥឡូវមកធ្លាយធ្លាក់បាក់ខ្ចាត់ខ្ចាយ      \nស្តាយអើយស្តាយមិនគួរមកពិការ។ "
     };
 
     function insertSample(type) { textPreview.innerText = samples[type]; }
     clearBtn.addEventListener('click', () => { textPreview.innerText = ''; textPreview.focus(); });
 
-    function setTextAlign(alignType, btnElement) {
+    // 🌟 មុខងារប្តូរ Align និងដោះស្រាយបញ្ហានៅលើ iOS ឱ្យរក្សាទុកបានត្រឹមត្រូវ ១០០%
+    function setTextAlign(alignType) {
         currentAlign = alignType;
         textPreview.style.textAlign = alignType;
+        
+        // ផ្លាស់ប្តូរ Active State របស់ប៊ូតុង
         document.querySelectorAll('.align-btn').forEach(btn => btn.classList.remove('active'));
-        btnElement.classList.add('active');
+        document.getElementById(`align${alignType.charAt(0).toUpperCase() + alignType.slice(1)}`).classList.add('active');
     }
 
+    // លាងសម្អាតកូដ Word ដែល Copy មកស្វ័យប្រវត្ត
     textPreview.addEventListener('paste', function(e) {
         e.preventDefault();
         const text = (e.originalEvent || e).clipboardData.getData('text/plain');
@@ -421,6 +452,7 @@
         }
     });
 
+    // 🚀 ប្រព័ន្ធវាស់វែង និងគូរអក្សរថ្មីសម្រាប់ iOS/iPad ធានាភាពត្រឹមត្រូវ ១០០% មិនថារត់ឆ្វេង កណ្តាល ស្តាំ
     function drawTextToCanvas(callback) {
         document.fonts.ready.then(() => {
             const text = textPreview.innerText;
@@ -431,23 +463,30 @@
             const currentTextColor = textColor.value;
             const currentBgColor = bgColor.value;
 
+            // ១. វាស់ទំហំទទឹងរបស់អក្សរខ្មែរគ្រប់ជួរ
             const dummyCanvas = document.createElement('canvas');
             const dummyCtx = dummyCanvas.getContext('2d');
             dummyCtx.font = `normal ${currentFontSize}px ${activeFontName}, 'Kantumruy Pro', sans-serif`;
 
+            const lineMeasurements = lines.map(line => ({
+                text: line,
+                width: dummyCtx.measureText(line).width
+            }));
+
+            // រកជួរដែលវែងជាងគេសម្រាប់ទទឹង
             let maxLineWidth = 0;
-            lines.forEach(line => {
-                const lineWidth = dummyCtx.measureText(line).width;
-                if (lineWidth > maxLineWidth) { maxLineWidth = lineWidth; }
+            lineMeasurements.forEach(m => {
+                if (m.width > maxLineWidth) { maxLineWidth = m.width; }
             });
 
+            // ២. គណនាទំហំ Canvas ស្វ័យប្រវត្តតាមសាច់អក្សរពិត (Dynamic Auto-Fit Layout)
             const paddingX = 40;
             const paddingY = 40;
-            
             const baseWidth = Math.max(300, maxLineWidth + (paddingX * 2));
             const baseHeight = (lines.length * currentFontSize * currentLineHeight) + (paddingY * 2);
             const scale = 3; 
 
+            // ៣. បង្កើត Canvas ពិតប្រាកដសម្រាប់គូរ
             const canvas = document.createElement('canvas');
             canvas.width = baseWidth * scale;
             canvas.height = baseHeight * scale;
@@ -455,55 +494,63 @@
             const ctx = canvas.getContext('2d');
             ctx.scale(scale, scale);
 
+            // ចាក់ពណ៌ផ្ទៃក្រោយ
             ctx.fillStyle = currentBgColor;
             ctx.fillRect(0, 0, baseWidth, baseHeight);
 
+            // កំណត់Font និងពណ៌អក្សរ
             ctx.textBaseline = "top";
             ctx.fillStyle = currentTextColor;
             ctx.font = `normal ${currentFontSize}px ${activeFontName}, 'Kantumruy Pro', sans-serif`;
 
+            // ៤. គូរអក្សរខ្មែរម្តងមួយជួរៗ ដោយគណនាទីតាំងAlign ឱ្យបានត្រឹមត្រូវបំផុតសម្រាប់ iOS
             let startY = paddingY;
-            lines.forEach((line) => {
-                let drawX = paddingX;
-
+            lineMeasurements.forEach((m) => {
+                let drawX = paddingX; // លំនាំដើមឆ្វេង
+                
+                // គណនាទីតាំងសម្រាប់ Center និង Right ដោយផ្អែកលើទទឹង Canvas សមាមាត្រ
                 if (currentAlign === "center") {
                     ctx.textAlign = "center";
-                    drawX = baseWidth / 2;
+                    drawX = baseWidth / 2; // ប្តូរទៅចំកណ្តាលផ្ទាំង Canvas
                 } else if (currentAlign === "right") {
                     ctx.textAlign = "right";
-                    drawX = baseWidth - paddingX;
+                    drawX = baseWidth - paddingX; // រុញទៅកៀនខាងស្តាំ Canvas
                 } else {
                     ctx.textAlign = "left";
                 }
 
-                ctx.fillText(line, drawX, startY);
+                ctx.fillText(m.text, drawX, startY);
                 startY += (currentFontSize * currentLineHeight);
             });
 
+            // ៥. ផ្ញើរូបភាព Base64 ទៅកាន់មុខងារ Export
             const pngUrl = canvas.toDataURL('image/png');
             callback(pngUrl, baseWidth, baseHeight);
         });
     }
 
+    // រក្សារូបភាព PNG
     document.getElementById('saveImgBtn').addEventListener('click', () => {
         drawTextToCanvas((pngUrl) => {
             const link = document.createElement('a');
-            link.download = 'toathmor-font-align.png';
+            link.download = 'toathmor-font-auto-fit.png';
             link.href = pngUrl;
             link.click();
         });
     });
 
+    // រក្សាទុកជា PDF
     document.getElementById('savePdfBtn').addEventListener('click', () => {
         drawTextToCanvas((pngUrl, width, height) => {
             const { jsPDF } = window.jspdf;
             const orientation = width > height ? 'l' : 'p';
             const pdf = new jsPDF(orientation, 'px', [width, height]);
             pdf.addImage(pngUrl, 'PNG', 0, 0, width, height);
-            pdf.save('toathmor-font-align.pdf');
+            pdf.save('toathmor-font-auto-fit.pdf');
         });
     });
 
+    // មុខងារ Dark Mode / Light Mode
     const themeBtn = document.getElementById('themeBtn');
     themeBtn.addEventListener('click', () => {
         const currentTheme = document.documentElement.getAttribute('data-theme');
@@ -518,6 +565,7 @@
         }
     });
 
+    // មុខងារ Share
     document.getElementById('shareBtn').addEventListener('click', async () => {
         if (navigator.share) {
             try {
