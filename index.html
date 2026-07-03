@@ -2,14 +2,13 @@
 <html lang="km">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>តារាងតេស្តពុម្ពអក្សរ - Font Tester Pro</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;500;600;700&family=Khmer+OS+Battambang&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
     <link rel="manifest" href="data:application/manifest+json;base64,ewogICJuYW1lIjogIkZvbnQgVGVzdGVyIFBybyIsCiAgInNob3J0X25hbWUiOiAiRm9udFRlc3RlciIsCiAgInN0YXJ0X3VybCI6ICIuIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjZjhmYWZjIiwKICAidGhlbWVfY29sb3IiOiAiIzRmNDZlNSIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImh0dHBzOi8vY2RuLWljb25zLXBuZy5mbGF0aWNvbi5jb20vNTEyLzI2NjUvMjY2NTExOS5wbmciLAogICAgICAic2l6ZXMiOiAiNTEyeDUxMiIsCiAgICAgICJ0eXBlIjogImltYWdlL3BuZyIKICAgIH0KICBdCn0=">
@@ -50,31 +49,36 @@
         }
 
         * {
-            box-sizing: border-box; /* 🔒 បង្ខំឱ្យគ្រប់ Element គណនាទំហំរួមទាំង Padding កុំឱ្យហៀរ */
+            box-sizing: border-box;
+            -webkit-user-select: none; /* ការពារកុំឱ្យ سلកអក្សរ លើប៊ូតុងនានា នាំឱ្យទាក់ដៃ */
+            user-select: none;
         }
 
-        body {
-            font-family: 'Kantumruy Pro', 'Khmer OS Battambang', system-ui, sans-serif;
-            background-color: var(--bg-body);
-            color: var(--text-main);
+        /* 🔒 ចាក់សោរមិនឱ្យទំព័រ Web ទាំងមូលរំកិលចុះឡើង (Lock Screen Body) */
+        html, body {
             margin: 0;
-            padding: 10px; /* បន្ថយ Padding លើ Mobile កុំឱ្យប៉ោង */
-            min-height: 100vh;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* បិទ Scroll មិនឱ្យរុញចុះរុញឡើងដាច់ខាត */
+            background-color: var(--bg-body);
+            font-family: 'Kantumruy Pro', 'Khmer OS Battambang', system-ui, sans-serif;
+            color: var(--text-main);
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: background 0.3s, color 0.3s;
         }
 
-        /* 🔄 ប្រអប់ធំ៖ រីករួមតាមទំហំអេក្រង់ (Fluid Width) */
+        /* 🔄 កែសម្រួលឱ្យពេញអេក្រង់ iPad / PC ១០០% */
         .container {
-            width: 100%;
-            max-width: 700px; /* កំណត់ទំហំសមល្មមស្អាតទាំងលើ Mobile និង Desktop */
+            width: 100vw;
+            height: 100vh;
+            max-width: 100%; /* ពេញអេក្រង់ */
             background: var(--bg-card);
-            padding: 15px;
-            border-radius: 16px;
-            box-shadow: var(--card-shadow);
-            border: 1px solid var(--border-color);
+            padding: 20px;
+            display: flex;
+            flex-direction: column; /* រៀបជាជួរឈរពេញកម្ពស់ */
+            overflow: hidden;
         }
 
         .header-bar {
@@ -83,50 +87,22 @@
             align-items: center;
             margin-bottom: 15px;
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 10px;
+            padding-bottom: 12px;
+            flex-shrink: 0; /* ការពារកុំឱ្យរួមទំហំ */
         }
 
-        .brand-name {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--text-main);
-        }
-
-        .sub-title {
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--primary);
-            text-transform: uppercase;
-        }
-
-        .header-actions {
-            display: flex;
-            gap: 6px;
-        }
+        .brand-name { font-size: 20px; font-weight: 700; color: var(--text-main); }
+        .sub-title { font-size: 11px; font-weight: 600; color: var(--primary); text-transform: uppercase; }
+        .header-actions { display: flex; gap: 8px; }
 
         .theme-toggle, .pwa-btn {
-            background: var(--primary-light);
-            border: 1px solid transparent;
-            padding: 6px 10px;
-            border-radius: 50px;
-            cursor: pointer;
-            color: var(--primary);
-            font-size: 11px;
-            font-weight: 600;
-            font-family: inherit;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            white-space: nowrap;
+            background: var(--primary-light); border: 1px solid transparent;
+            padding: 6px 12px; border-radius: 50px; cursor: pointer; color: var(--primary);
+            font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 6px;
         }
-        
-        .pwa-btn {
-            background: var(--success-light);
-            color: var(--success);
-            display: none;
-        }
+        .pwa-btn { background: var(--success-light); color: var(--success); display: none; }
 
-        /* 🔒 ចាក់សោរប្រអប់រួម៖ ឱ្យនៅជាជួរដេក ២ ស្មើគ្នានិច្ច ទោះបីជាអេក្រង់តូចប៉ុណ្ណាក៏ដោយ */
+        /* ប្រអប់ Font & Upload រួមគ្នា */
         .combined-font-box {
             background: var(--toolbar-bg);
             border: 1px solid var(--border-color);
@@ -134,115 +110,70 @@
             padding: 10px;
             margin-bottom: 15px;
             display: grid;
-            grid-template-columns: 1fr 1fr; /* ចែកជា ២ ស្មើគ្នា ៥០% ម្នាក់ */
-            gap: 10px;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
             width: 100%;
+            flex-shrink: 0;
         }
 
         .mini-upload-zone {
             border: 2px dashed var(--border-color);
             background: var(--bg-card);
             border-radius: 8px;
-            padding: 8px;
+            padding: 10px;
             text-align: center;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 8px;
             color: var(--text-muted);
-            font-size: 11px;
-            font-weight: 500;
-            min-width: 0; /* ការពារកុំឱ្យហៀរ */
-            overflow: hidden;
-        }
-        .mini-upload-zone span {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis; /* បើឈ្មោះវែងពេក វាដាក់ចំនុចៗ (...) ការពារកុំឱ្យរុញគ្នា */
-        }
-        .mini-upload-zone i { font-size: 13px; color: var(--primary); flex-shrink: 0; }
-
-        .selector-zone {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            min-width: 0;
-        }
-        .font-select-custom {
-            width: 100%;
-            padding: 8px;
-            border-radius: 6px;
-            border: 1px solid var(--border-color);
-            background: var(--bg-card);
-            color: var(--text-main);
-            font-family: inherit;
             font-size: 12px;
-            outline: none;
-            cursor: pointer;
+            font-weight: 500;
+            min-width: 0;
+            overflow: hidden;
+        }
+        .mini-upload-zone span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .mini-upload-zone i { font-size: 14px; color: var(--primary); flex-shrink: 0; }
+
+        .selector-zone { display: flex; flex-direction: column; justify-content: center; min-width: 0; }
+        .font-select-custom {
+            width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color);
+            background: var(--bg-card); color: var(--text-main); font-family: inherit; font-size: 13px; outline: none; cursor: pointer;
         }
 
         #fontFile { display: none; }
 
-        /* 🔄 របារបញ្ជាទាញ Size៖ ប្តូរទម្រង់ទៅតាមអេក្រង់ស្វ័យប្រវត្តិ */
         .controls-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr; /* នៅលើ iPad/PC ចេញ ២ ជួរដេក */
-            gap: 12px;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
             margin-bottom: 15px;
             width: 100%;
+            flex-shrink: 0;
         }
 
-        .control-group {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            min-width: 0;
-        }
-        .control-group label { 
-            font-size: 11px; 
-            font-weight: 600; 
-            color: var(--text-muted);
-        }
+        .control-group { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+        .control-group label { font-size: 12px; font-weight: 600; color: var(--text-muted); }
 
         input[type="range"] {
-            -webkit-appearance: none;
-            width: 100%;
-            height: 5px;
-            background: var(--border-color);
-            border-radius: 5px;
-            outline: none;
+            -webkit-appearance: none; width: 100%; height: 5px; background: var(--border-color); border-radius: 5px; outline: none;
         }
         input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: var(--primary);
-            cursor: pointer;
+            -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--primary); cursor: pointer;
         }
 
-        .color-pickers { display: flex; gap: 6px; flex: 1; min-width: 0; }
+        .color-pickers { display: flex; gap: 8px; flex: 1; min-width: 0; }
         .color-box { 
-            display: flex; 
-            align-items: center; 
-            gap: 4px; 
-            font-size: 11px; 
-            background: var(--toolbar-bg);
-            padding: 6px;
-            border-radius: 6px;
-            border: 1px solid var(--border-color);
-            flex: 1;
-            min-width: 0;
+            display: flex; align-items: center; gap: 6px; font-size: 12px; background: var(--toolbar-bg);
+            padding: 8px; border-radius: 6px; border: 1px solid var(--border-color); flex: 1; min-width: 0;
         }
-        .color-box input[type="color"] {
-            border: none; width: 18px; height: 18px; border-radius: 4px; cursor: pointer; background: none; padding: 0; flex-shrink: 0;
-        }
+        .color-box input[type="color"] { border: none; width: 20px; height: 20px; border-radius: 4px; cursor: pointer; background: none; padding: 0; flex-shrink: 0; }
         .color-box span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-        .palette-container { display: flex; gap: 4px; flex-wrap: wrap; }
+        .palette-container { display: flex; gap: 6px; flex-wrap: wrap; }
         .palette-btn {
-            width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--bg-card);
+            width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--bg-card);
             cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,0.1); position: relative; overflow: hidden;
         }
         .palette-btn::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 50%; background: var(--p-text); }
@@ -250,22 +181,15 @@
 
         .text-actions {
             display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 10px; gap: 8px; width: 100%;
+            margin-bottom: 10px; gap: 8px; width: 100%; flex-shrink: 0;
         }
 
-        .sample-buttons { display: flex; gap: 4px; align-items: center; }
-        .sample-buttons span { font-size: 11px; font-weight: 600; color: var(--text-muted); }
-        .sample-btn {
-            background: var(--primary-light); color: var(--primary); border: 1px solid transparent;
-            padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 11px; font-family: inherit;
-        }
+        .sample-buttons { display: flex; gap: 6px; align-items: center; }
+        .sample-buttons span { font-size: 12px; font-weight: 600; color: var(--text-muted); }
+        .sample-btn { background: var(--primary-light); color: var(--primary); border: 1px solid transparent; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; font-family: inherit; }
+        .clear-btn { background: var(--danger-light); color: var(--danger); border: 1px solid transparent; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; display: flex; align-items: center; gap: 4px; font-family: inherit; }
 
-        .clear-btn {
-            background: var(--danger-light); color: var(--danger); border: 1px solid transparent;
-            padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 11px; font-family: inherit;
-            display: flex; align-items: center; gap: 4px;
-        }
-
+        /* 🔄 ប្រអប់ Preview៖ កែសម្រួលឱ្យពង្រីកធំពេញផ្ទៃដែលនៅសល់ (Flex Auto-Grow) */
         .preview-wrapper {
             border-radius: 12px;
             border: 1px solid var(--border-color);
@@ -273,25 +197,20 @@
             margin-bottom: 15px;
             display: flex;
             flex-direction: column;
+            flex: 1; /* 🔒 បង្ខំឱ្យប្រអប់នេះរីកធំពេញទំហំ iPad/PC ដែលនៅសល់ */
             width: 100%;
         }
 
-        .align-toolbar {
-            display: flex; background: var(--toolbar-bg); padding: 6px; gap: 4px; border-bottom: 1px solid var(--border-color);
-        }
-        
-        .align-btn {
-            background: transparent; border: none; padding: 6px 10px; border-radius: 6px;
-            cursor: pointer; font-size: 11px; color: var(--text-muted); display: flex; align-items: center; gap: 4px; font-family: inherit;
-        }
+        .align-toolbar { display: flex; background: var(--toolbar-bg); padding: 8px; gap: 6px; border-bottom: 1px solid var(--border-color); flex-shrink: 0; }
+        .align-btn { background: transparent; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 4px; font-family: inherit; }
         .align-btn.active { background: var(--primary); color: #ffffff; font-weight: 600; }
 
+        /* 🔒 កន្លែងវាយអក្សរ៖ ទុកឱ្យ Scroll បានតែផ្នែកនេះទេ ពេលអក្សរវែងហួស */
         .editable-preview {
             width: 100%;
-            min-height: 150px;
-            height: auto;
-            padding: 15px;
-            font-size: 24px;
+            height: 100%;
+            padding: 20px;
+            font-size: 32px;
             font-family: 'Kantumruy Pro', 'Khmer OS Battambang', sans-serif;
             color: var(--text-main);
             background: var(--bg-card);
@@ -301,44 +220,27 @@
             white-space: pre-wrap;
             word-wrap: break-word;
             text-align: left;
+            overflow-y: auto; /* 🔒 អនុញ្ញាតឱ្យ Scroll បានតែផ្នែកខាងក្នុងនេះប៉ុណ្ណោះ */
+            -webkit-overflow-scrolling: touch;
+            -webkit-user-select: text; /* អនុញ្ញាតឱ្យរើសអក្សរវាយបានធម្មតា */
+            user-select: text;
         }
-        .editable-preview:empty:before {
-            content: attr(placeholder); color: var(--text-muted); opacity: 0.6; pointer-events: none;
-        }
+        .editable-preview:empty:before { content: attr(placeholder); color: var(--text-muted); opacity: 0.6; pointer-events: none; }
 
-        /* 🔄 ប៊ូតុងសកម្មភាព៖ នៅលើ PC រីកទទឹងស្មើគ្នាដេក នៅលើ Mobile ប្តូរទៅតាមអេក្រង់ */
-        .action-bar { display: flex; gap: 8px; width: 100%; }
+        .action-bar { display: flex; gap: 10px; width: 100%; flex-shrink: 0; margin-bottom: calc(env(safe-area-inset-bottom) / 2); }
         .action-btn {
-            flex: 1; padding: 10px; border: 1px solid var(--border-color); border-radius: 8px;
-            cursor: pointer; font-weight: 600; font-family: inherit; font-size: 12px; display: flex;
-            align-items: center; justify-content: center; gap: 4px;
-            background: var(--bg-card); color: var(--text-main);
-            white-space: nowrap;
+            flex: 1; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px;
+            cursor: pointer; font-weight: 600; font-family: inherit; font-size: 13px; display: flex;
+            align-items: center; justify-content: center; gap: 6px; background: var(--bg-card); color: var(--text-main); white-space: nowrap;
         }
-        .action-btn.primary { background: var(--primary); color: white; border-color: transparent; }
+        .action-btn primary { background: var(--primary); color: white; border-color: transparent; }
 
-        /* 📱 ដំណោះស្រាយពិសេសសំរាប់ទូរស័ព្ទដៃអេក្រង់តូច (Mobile Responsive) */
+        /* 📱 សម្រាប់ទូរស័ព្ទដៃបញ្ឈរតូច ប្តូរការទាញខ្លះដើម្បីកុំឱ្យចង្អៀត */
         @media (max-width: 500px) {
-            .controls-grid {
-                grid-template-columns: 1fr; /* ប្តូរមកជាជួរឈរវិញដើម្បីកុំឱ្យហៀរការទាញ */
-            }
-            .control-group[style*="grid-column"] {
-                grid-column: span 1 !important;
-            }
-            .control-group[style*="grid-column"] > div {
-                flex-direction: column;
-                align-items: flex-start !important;
-                gap: 8px;
-            }
-            .color-pickers {
-                width: 100%;
-            }
-            .action-bar {
-                flex-direction: column; /* ប៊ូតុងសកម្មភាពរៀបចុះក្រោមវិញដើម្បីងាយស្រួលចុចលើទូរស័ព្ទ */
-            }
-            .action-btn {
-                width: 100%;
-            }
+            .controls-grid { grid-template-columns: 1fr; }
+            .control-group[style*="grid-column"] { grid-column: span 1 !important; }
+            .action-bar { flex-direction: column; }
+            .action-btn { width: 100%; }
         }
     </style>
 </head>
@@ -374,14 +276,14 @@
         <div class="control-group">
             <div style="display: flex; justify-content: space-between;">
                 <label>ទំហំអក្សរ</label>
-                <span id="sizeVal" style="font-size:11px; font-weight:600; color:var(--primary);">32px</span>
+                <span id="sizeVal" style="font-size:12px; font-weight:600; color:var(--primary);">32px</span>
             </div>
             <input type="range" id="fontSize" min="16" max="100" value="32">
         </div>
         <div class="control-group">
             <div style="display: flex; justify-content: space-between;">
                 <label>គម្លាតបន្ទាត់</label>
-                <span id="lineVal" style="font-size:11px; font-weight:600; color:var(--primary);">1.7</span>
+                <span id="lineVal" style="font-size:12px; font-weight:600; color:var(--primary);">1.7</span>
             </div>
             <input type="range" id="lineSpacing" min="1" max="3" step="0.1" value="1.7">
         </div>
@@ -432,13 +334,20 @@
     </div>
 
     <div class="action-bar">
-        <button class="action-btn primary" id="saveImgBtn"><i class="fa-regular fa-image"></i> រក្សាទុករូបភាព</button>
+        <button class="action-btn" style="background: var(--primary); color: white; border-color: transparent;" id="saveImgBtn"><i class="fa-regular fa-image"></i> រក្សាទុករូបភាព</button>
         <button class="action-btn" id="savePdfBtn"><i class="fa-regular fa-file-pdf"></i> PDF</button>
         <button class="action-btn" id="shareBtn"><i class="fa-solid fa-share-nodes"></i> ចែករំលែក</button>
     </div>
 </div>
 
 <script>
+    // ការពារការទាញអូសអេក្រង់ (Prevent Rubber-Banding / Elastic Scroll លើ Safari iPad)
+    document.addEventListener('touchmove', function(e) {
+        if (!e.target.closest('.editable-preview')) {
+            e.preventDefault();
+        }
+    }, { passive: false });
+
     const fontFileInput = document.getElementById('fontFile');
     const fontSelect = document.getElementById('fontSelect');
     const textPreview = document.getElementById('textPreview');
@@ -463,7 +372,6 @@
     };
 
     function insertSample(type) { textPreview.innerText = samples[type]; }
-    
     clearBtn.addEventListener('click', () => { textPreview.innerHTML = ''; textPreview.focus(); });
 
     function setTextAlign(alignType) {
@@ -503,8 +411,7 @@
                         document.fonts.add(loadedFont);
                         const option = document.createElement('option');
                         option.value = fontName; option.textContent = file.name;
-                        fontSelect.appendChild(option);
-                        fontSelect.value = fontName;
+                        fontSelect.appendChild(option); fontSelect.value = fontName;
                         triggerFontChange(fontName);
                     });
                 };
