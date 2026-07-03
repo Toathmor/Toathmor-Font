@@ -2,7 +2,7 @@
 <html lang="km">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>តារាងតេស្តពុម្ពអក្សរ - Font Tester Pro</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -49,175 +49,158 @@
             --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
         }
 
+        * {
+            box-sizing: border-box; /* 🔒 បង្ខំឱ្យគ្រប់ Element គណនាទំហំរួមទាំង Padding កុំឱ្យហៀរ */
+        }
+
         body {
             font-family: 'Kantumruy Pro', 'Khmer OS Battambang', system-ui, sans-serif;
             background-color: var(--bg-body);
             color: var(--text-main);
             margin: 0;
-            padding: 20px;
+            padding: 10px; /* បន្ថយ Padding លើ Mobile កុំឱ្យប៉ោង */
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: background 0.3s, color 0.3s;
-            box-sizing: border-box;
         }
 
+        /* 🔄 ប្រអប់ធំ៖ រីករួមតាមទំហំអេក្រង់ (Fluid Width) */
         .container {
             width: 100%;
-            max-width: 850px;
+            max-width: 700px; /* កំណត់ទំហំសមល្មមស្អាតទាំងលើ Mobile និង Desktop */
             background: var(--bg-card);
-            padding: 30px;
-            border-radius: 20px;
+            padding: 15px;
+            border-radius: 16px;
             box-shadow: var(--card-shadow);
             border: 1px solid var(--border-color);
-            box-sizing: border-box;
         }
 
         .header-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
+            margin-bottom: 15px;
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 20px;
-        }
-
-        .title-area {
-            display: flex;
-            flex-direction: column;
+            padding-bottom: 10px;
         }
 
         .brand-name {
-            font-size: 24px;
+            font-size: 18px;
             font-weight: 700;
             color: var(--text-main);
-            letter-spacing: -0.5px;
         }
 
         .sub-title {
-            font-size: 14px;
+            font-size: 11px;
             font-weight: 600;
             color: var(--primary);
-            letter-spacing: 1px;
             text-transform: uppercase;
-            margin-top: 2px;
         }
 
         .header-actions {
             display: flex;
-            gap: 10px;
-            align-items: center;
+            gap: 6px;
         }
 
         .theme-toggle, .pwa-btn {
             background: var(--primary-light);
             border: 1px solid transparent;
-            padding: 8px 16px;
+            padding: 6px 10px;
             border-radius: 50px;
             cursor: pointer;
             color: var(--primary);
-            font-size: 13px;
+            font-size: 11px;
             font-weight: 600;
             font-family: inherit;
-            transition: all 0.2s ease;
             display: flex;
             align-items: center;
-            gap: 8px;
-        }
-        .theme-toggle:hover, .pwa-btn:hover { 
-            background: var(--primary);
-            color: #ffffff;
+            gap: 4px;
+            white-space: nowrap;
         }
         
         .pwa-btn {
             background: var(--success-light);
             color: var(--success);
-            display: none; /* បង្ហាញតែពេល Browser អនុញ្ញាតឱ្យ Install */
-        }
-        .pwa-btn:hover {
-            background: var(--success);
-            color: #ffffff;
+            display: none;
         }
 
-        /* 🌟 វង់ក្រចកទី១៖ រៀបចំប្រអប់បញ្ចូលគ្នាឱ្យតូច រំលេចជួរដេកតែមួយ */
+        /* 🔒 ចាក់សោរប្រអប់រួម៖ ឱ្យនៅជាជួរដេក ២ ស្មើគ្នានិច្ច ទោះបីជាអេក្រង់តូចប៉ុណ្ណាក៏ដោយ */
         .combined-font-box {
             background: var(--toolbar-bg);
             border: 1px solid var(--border-color);
-            border-radius: 14px;
-            padding: 12px 15px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
+            border-radius: 12px;
+            padding: 10px;
+            margin-bottom: 15px;
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* ចែកជា ២ ស្មើគ្នា ៥០% ម្នាក់ */
+            gap: 10px;
+            width: 100%;
         }
 
         .mini-upload-zone {
-            flex: 1;
             border: 2px dashed var(--border-color);
             background: var(--bg-card);
-            border-radius: 10px;
-            padding: 10px;
+            border-radius: 8px;
+            padding: 8px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 6px;
             color: var(--text-muted);
-            font-size: 13px;
+            font-size: 11px;
             font-weight: 500;
+            min-width: 0; /* ការពារកុំឱ្យហៀរ */
+            overflow: hidden;
         }
-        .mini-upload-zone:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-            background: var(--primary-light);
+        .mini-upload-zone span {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis; /* បើឈ្មោះវែងពេក វាដាក់ចំនុចៗ (...) ការពារកុំឱ្យរុញគ្នា */
         }
-        .mini-upload-zone i { font-size: 16px; color: var(--primary); }
+        .mini-upload-zone i { font-size: 13px; color: var(--primary); flex-shrink: 0; }
 
         .selector-zone {
-            flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 5px;
-        }
-        .selector-zone label {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text-muted);
+            justify-content: center;
+            min-width: 0;
         }
         .font-select-custom {
             width: 100%;
-            padding: 8px 12px;
-            border-radius: 8px;
+            padding: 8px;
+            border-radius: 6px;
             border: 1px solid var(--border-color);
             background: var(--bg-card);
             color: var(--text-main);
             font-family: inherit;
-            font-size: 13px;
+            font-size: 12px;
             outline: none;
             cursor: pointer;
         }
 
         #fontFile { display: none; }
 
-        /* -------------------------------------- */
-
+        /* 🔄 របារបញ្ជាទាញ Size៖ ប្តូរទម្រង់ទៅតាមអេក្រង់ស្វ័យប្រវត្តិ */
         .controls-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
-            margin-bottom: 25px;
+            grid-template-columns: 1fr 1fr; /* នៅលើ iPad/PC ចេញ ២ ជួរដេក */
+            gap: 12px;
+            margin-bottom: 15px;
+            width: 100%;
         }
 
         .control-group {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 4px;
+            min-width: 0;
         }
         .control-group label { 
-            font-size: 13px; 
+            font-size: 11px; 
             font-weight: 600; 
             color: var(--text-muted);
         }
@@ -225,159 +208,137 @@
         input[type="range"] {
             -webkit-appearance: none;
             width: 100%;
-            height: 6px;
+            height: 5px;
             background: var(--border-color);
             border-radius: 5px;
             outline: none;
         }
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 16px;
             border-radius: 50%;
             background: var(--primary);
             cursor: pointer;
-            transition: transform 0.1s;
-        }
-        input[type="range"]::-webkit-slider-thumb:hover {
-            transform: scale(1.2);
         }
 
-        .color-pickers { display: flex; gap: 12px; }
+        .color-pickers { display: flex; gap: 6px; flex: 1; min-width: 0; }
         .color-box { 
             display: flex; 
             align-items: center; 
-            gap: 8px; 
-            font-size: 13px; 
+            gap: 4px; 
+            font-size: 11px; 
             background: var(--toolbar-bg);
-            padding: 6px 12px;
-            border-radius: 8px;
+            padding: 6px;
+            border-radius: 6px;
             border: 1px solid var(--border-color);
             flex: 1;
+            min-width: 0;
         }
         .color-box input[type="color"] {
-            border: none;
-            width: 24px;
-            height: 24px;
-            border-radius: 4px;
-            cursor: pointer;
-            background: none;
-            padding: 0;
+            border: none; width: 18px; height: 18px; border-radius: 4px; cursor: pointer; background: none; padding: 0; flex-shrink: 0;
         }
+        .color-box span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-        .palette-container { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+        .palette-container { display: flex; gap: 4px; flex-wrap: wrap; }
         .palette-btn {
-            width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--bg-card);
-            cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.1); transition: transform 0.2s;
-            position: relative; overflow: hidden;
+            width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--bg-card);
+            cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,0.1); position: relative; overflow: hidden;
         }
-        .palette-btn:hover { transform: scale(1.15); }
         .palette-btn::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 50%; background: var(--p-text); }
         .palette-btn::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; background: var(--p-bg); }
 
         .text-actions {
             display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 12px; flex-wrap: wrap; gap: 10px;
+            margin-bottom: 10px; gap: 8px; width: 100%;
         }
 
-        .sample-buttons { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-        .sample-buttons span { font-size: 13px; font-weight: 600; color: var(--text-muted); }
+        .sample-buttons { display: flex; gap: 4px; align-items: center; }
+        .sample-buttons span { font-size: 11px; font-weight: 600; color: var(--text-muted); }
         .sample-btn {
             background: var(--primary-light); color: var(--primary); border: 1px solid transparent;
-            padding: 6px 14px; border-radius: 8px; cursor: pointer; font-size: 13px; font-family: inherit; font-weight: 500; transition: 0.2s;
+            padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 11px; font-family: inherit;
         }
-        .sample-btn:hover { background: var(--primary); color: #ffffff; }
 
         .clear-btn {
             background: var(--danger-light); color: var(--danger); border: 1px solid transparent;
-            padding: 6px 14px; border-radius: 8px; cursor: pointer; font-size: 13px; font-family: inherit; font-weight: 500; transition: 0.2s;
-            display: flex; align-items: center; gap: 6px;
+            padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 11px; font-family: inherit;
+            display: flex; align-items: center; gap: 4px;
         }
-        .clear-btn:hover { background: var(--danger); color: #ffffff; }
 
         .preview-wrapper {
-            border-radius: 14px;
+            border-radius: 12px;
             border: 1px solid var(--border-color);
             overflow: hidden;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            margin-bottom: 15px;
             display: flex;
             flex-direction: column;
+            width: 100%;
         }
 
         .align-toolbar {
-            display: flex;
-            background: var(--toolbar-bg);
-            padding: 8px 12px;
-            gap: 6px;
-            border-bottom: 1px solid var(--border-color);
+            display: flex; background: var(--toolbar-bg); padding: 6px; gap: 4px; border-bottom: 1px solid var(--border-color);
         }
         
         .align-btn {
-            background: transparent;
-            border: none;
-            padding: 8px 14px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--text-muted);
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-family: inherit;
+            background: transparent; border: none; padding: 6px 10px; border-radius: 6px;
+            cursor: pointer; font-size: 11px; color: var(--text-muted); display: flex; align-items: center; gap: 4px; font-family: inherit;
         }
-        .align-btn:hover {
-            background: var(--primary-light);
-            color: var(--primary);
-        }
-        .align-btn.active {
-            background: var(--primary);
-            color: #ffffff;
-            font-weight: 600;
-        }
+        .align-btn.active { background: var(--primary); color: #ffffff; font-weight: 600; }
 
         .editable-preview {
             width: 100%;
-            min-height: 220px;
+            min-height: 150px;
             height: auto;
-            padding: 25px;
-            font-size: 32px;
+            padding: 15px;
+            font-size: 24px;
             font-family: 'Kantumruy Pro', 'Khmer OS Battambang', sans-serif;
             color: var(--text-main);
             background: var(--bg-card);
             border: none;
-            box-sizing: border-box;
             outline: none;
-            line-height: 1.7;
+            line-height: 1.6;
             white-space: pre-wrap;
             word-wrap: break-word;
             text-align: left;
-            transition: text-align 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .editable-preview:empty:before,
-        .editable-preview:focus:empty:before {
-            content: attr(placeholder);
-            color: var(--text-muted);
-            opacity: 0.6;
-            pointer-events: none;
+        .editable-preview:empty:before {
+            content: attr(placeholder); color: var(--text-muted); opacity: 0.6; pointer-events: none;
         }
 
-        .action-bar { display: flex; gap: 12px; flex-wrap: wrap; }
+        /* 🔄 ប៊ូតុងសកម្មភាព៖ នៅលើ PC រីកទទឹងស្មើគ្នាដេក នៅលើ Mobile ប្តូរទៅតាមអេក្រង់ */
+        .action-bar { display: flex; gap: 8px; width: 100%; }
         .action-btn {
-            flex: 1; min-width: 145px; padding: 12px 20px; border: 1px solid var(--border-color); border-radius: 10px;
-            cursor: pointer; font-weight: 600; font-family: inherit; font-size: 14px; display: flex;
-            align-items: center; justify-content: center; gap: 8px; transition: all 0.2s;
+            flex: 1; padding: 10px; border: 1px solid var(--border-color); border-radius: 8px;
+            cursor: pointer; font-weight: 600; font-family: inherit; font-size: 12px; display: flex;
+            align-items: center; justify-content: center; gap: 4px;
             background: var(--bg-card); color: var(--text-main);
+            white-space: nowrap;
         }
         .action-btn.primary { background: var(--primary); color: white; border-color: transparent; }
-        .action-btn.primary:hover { background: var(--primary-hover); }
-        .action-btn:not(.primary):hover { background: var(--toolbar-bg); border-color: var(--text-muted); }
 
-        /* ទូរស័ព្ទដៃតូច បំបែកជួរវិញកុំឱ្យចង្អៀត */
-        @media (max-width: 600px) {
-            .combined-font-box { flex-direction: column; align-items: stretch; gap: 10px; }
+        /* 📱 ដំណោះស្រាយពិសេសសំរាប់ទូរស័ព្ទដៃអេក្រង់តូច (Mobile Responsive) */
+        @media (max-width: 500px) {
+            .controls-grid {
+                grid-template-columns: 1fr; /* ប្តូរមកជាជួរឈរវិញដើម្បីកុំឱ្យហៀរការទាញ */
+            }
+            .control-group[style*="grid-column"] {
+                grid-column: span 1 !important;
+            }
+            .control-group[style*="grid-column"] > div {
+                flex-direction: column;
+                align-items: flex-start !important;
+                gap: 8px;
+            }
+            .color-pickers {
+                width: 100%;
+            }
+            .action-bar {
+                flex-direction: column; /* ប៊ូតុងសកម្មភាពរៀបចុះក្រោមវិញដើម្បីងាយស្រួលចុចលើទូរស័ព្ទ */
+            }
+            .action-btn {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -387,10 +348,10 @@
     <div class="header-bar">
         <div class="title-area">
             <div class="brand-name">តារាងតេស្តពុម្ពអក្សរ</div>
-            <div class="sub-title">Font Tester Pro <span style="font-size:10px; opacity:0.6;">(TOATHMOR)</span></div>
+            <div class="sub-title">Font Tester Pro</div>
         </div>
         <div class="header-actions">
-            <button class="pwa-btn" id="installBtn"><i class="fa-solid fa-download"></i> ដំឡើងកម្មវិធី</button>
+            <button class="pwa-btn" id="installBtn"><i class="fa-solid fa-download"></i> ដំឡើង</button>
             <button class="theme-toggle" id="themeBtn"><i class="fa-solid fa-moon"></i> ងងឹត</button>
         </div>
     </div>
@@ -398,13 +359,13 @@
     <div class="combined-font-box">
         <div class="mini-upload-zone" onclick="document.getElementById('fontFile').click()">
             <i class="fa-solid fa-cloud-arrow-up"></i>
-            <span>បញ្ចូលពុម្ពអក្សរ (.ttf, .otf, .woff)</span>
+            <span>បញ្ចូលពុម្ពអក្សរ</span>
             <input type="file" id="fontFile" accept=".ttf, .otf, .woff, .woff2" multiple>
         </div>
         
         <div class="selector-zone">
             <select id="fontSelect" class="font-select-custom">
-                <option value="default">ពុម្ពអក្សរប្រព័ន្ធ (Kantumruy / Battambang)</option>
+                <option value="default">ពុម្ពអក្សរប្រព័ន្ធ</option>
             </select>
         </div>
     </div>
@@ -413,22 +374,22 @@
         <div class="control-group">
             <div style="display: flex; justify-content: space-between;">
                 <label>ទំហំអក្សរ</label>
-                <span id="sizeVal" style="font-size:12px; font-weight:600; color:var(--primary);">32px</span>
+                <span id="sizeVal" style="font-size:11px; font-weight:600; color:var(--primary);">32px</span>
             </div>
             <input type="range" id="fontSize" min="16" max="100" value="32">
         </div>
         <div class="control-group">
             <div style="display: flex; justify-content: space-between;">
                 <label>គម្លាតបន្ទាត់</label>
-                <span id="lineVal" style="font-size:12px; font-weight:600; color:var(--primary);">1.7</span>
+                <span id="lineVal" style="font-size:11px; font-weight:600; color:var(--primary);">1.7</span>
             </div>
             <input type="range" id="lineSpacing" min="1" max="3" step="0.1" value="1.7">
         </div>
         <div class="control-group" style="grid-column: span 2;">
             <label>កំណត់ពណ៌ផ្ទាល់ខ្លួន / ពណ៌រហ័ស</label>
-            <div style="display: flex; gap:15px; flex-wrap: wrap; align-items: center;">
-                <div class="color-pickers" style="flex:1;">
-                    <div class="color-box"><input type="color" id="textColor" value="#0f172a"> <span>ពណ៌អក្សរ</span></div>
+            <div style="display: flex; gap:10px; flex-wrap: wrap; align-items: center; justify-content: space-between; width: 100%;">
+                <div class="color-pickers">
+                    <div class="color-box"><input type="color" id="textColor" value="#0f172a"> <span>អក្សរ</span></div>
                     <div class="color-box"><input type="color" id="bgColor" value="#ffffff"> <span>ផ្ទៃក្រោយ</span></div>
                 </div>
                 <div class="palette-container">
@@ -437,7 +398,6 @@
                     <div class="palette-btn" style="--p-text: #facc15; --p-bg: #1e3a8a;" onclick="setQuickColor('#facc15', '#1e3a8a')"></div>
                     <div class="palette-btn" style="--p-text: #ffffff; --p-bg: #15803d;" onclick="setQuickColor('#ffffff', '#15803d')"></div>
                     <div class="palette-btn" style="--p-text: #ffffff; --p-bg: #b91c1c;" onclick="setQuickColor('#ffffff', '#b91c1c')"></div>
-                    <div class="palette-btn" style="--p-text: #2563eb; --p-bg: #fef08a;" onclick="setQuickColor('#2563eb', '#fef08a')"></div>
                 </div>
             </div>
         </div>
@@ -446,11 +406,11 @@
     <div class="text-actions">
         <div class="sample-buttons">
             <span>គំរូ៖</span>
-            <button class="sample-btn" onclick="insertSample('abc')">ព្យញ្ជនៈ</button>
+            <button class="sample-btn" onclick="insertSample('abc')">អក្សរ</button>
             <button class="sample-btn" onclick="insertSample('proverb')">សុភាសិត</button>
             <button class="sample-btn" onclick="insertSample('poem')">កំណាព្យ</button>
         </div>
-        <button class="clear-btn" id="clearBtn"><i class="fa-regular fa-trash-can"></i> សម្អាត</button>
+        <button class="clear-btn" id="clearBtn"><i class="fa-regular fa-trash-can"></i> លុប</button>
     </div>
 
     <div class="preview-wrapper">
@@ -465,7 +425,7 @@
                 <i class="fa-solid fa-align-right"></i> ស្តាំ
             </button>
         </div>
-        <div class="editable-preview" id="textPreview" contenteditable="true" placeholder="សូមវាយអក្សរខ្មែរនៅទីនេះ ដើម្បីតេស្តមើល...">អនិច្ចាតោថ្មលោកកសាង
+        <div class="editable-preview" id="textPreview" contenteditable="true" placeholder="សូមវាយអក្សរខ្មែរនៅទីនេះ...">អនិច្ចាតោថ្មលោកកសាង
 មើលថាថាងយ៉ាងរស់ស្ទុះប្រែប្រាយ
 ឥឡូវមកធ្លាយធ្លាក់បាក់ខ្ចាត់ខ្ចាយ
 ស្តាយអើយស្តាយមិនគួរមកពិការ។</div>
@@ -473,7 +433,7 @@
 
     <div class="action-bar">
         <button class="action-btn primary" id="saveImgBtn"><i class="fa-regular fa-image"></i> រក្សាទុករូបភាព</button>
-        <button class="action-btn" id="savePdfBtn"><i class="fa-regular fa-file-pdf"></i> ទាញយកជា PDF</button>
+        <button class="action-btn" id="savePdfBtn"><i class="fa-regular fa-file-pdf"></i> PDF</button>
         <button class="action-btn" id="shareBtn"><i class="fa-solid fa-share-nodes"></i> ចែករំលែក</button>
     </div>
 </div>
@@ -497,17 +457,14 @@
     let currentAlign = "left";
 
     const samples = {
-        abc: "ក្ក ខ្ខ គ្គ ឃ្ឃ ង្ង ច្ច ឆ្ឆ ជ្ជ ឈ្ឈ ញ្ញ(ញ) ដ្ដ ឋ្ឋ ឌ្ឌ ឍ្ឍ ណ្ណ ត្ត ថ្ថ ទ្ទ ធ្ធ ប្ប ផ្ផ ព្ព ភ្ភ ម្ម យ្យ រ្រ ល្ល វ្វ ស្ស ហ្ហ ឡ អ្អ",
-        proverb: "នគរថ្កើងប្លែក សប្បាយតែភ្នែក ក្នុងចិត្តរងកម្ម។\nវិជ្ជាជាទ្រព្យគាប់ចិន្តា।\nជីវិតគឺជាការតស៊ូ។",
-        poem: "អនិច្ចាតោថ្មលោកកសាង\nមើលថាថាងយ៉ាងរស់ស្ទុះប្រែប្រាយ\nឥឡូវមកធ្លាយធ្លាក់បាក់ខ្ចាត់ខ្ចាយ\nស្តាយអើយស្តាយមិនគួរមកពិការ។"
+        abc: "ក្ក ខ្ខ គ្គ ឃ្ឃ ង្ង ច្ច ឆ្ឆ ជ្ជ ឈ្ឈ ញ្ញ ដ្ដ ឋ្ឋ ឌ្ឌ ឍ្ឍ ណ្ណ ត្ត ថ្ថ ទ្ទ ធ្ធ ប្ប ផ្ផ ព្ព ភ្ភ ម្ម យ្យ រ្រ ល្ល វ្វ ស្ស ហ្ហ ឡ អ្អ",
+        proverb: "នគរថ្កើងប្លែក សប្បាយតែភ្នែក ក្នុងចិត្តរងកម្ម។\nវិជ្ជាជាទ្រព្យគាប់ចិន្តា។",
+        poem: "អនិច្ចាតោថ្មលោកកសាង\nមើលថាថាងយ៉ាងរស់ស្ទុះប្រែប្រាយ\nឥឡូវមកធ្លាយធ្លាក់បាក់ខ្ចាត់ខ្ចាយ\nស្តាយអើយស្តាយមិនគួរមកពិការ"
     };
 
     function insertSample(type) { textPreview.innerText = samples[type]; }
     
-    clearBtn.addEventListener('click', () => { 
-        textPreview.innerHTML = ''; 
-        textPreview.focus(); 
-    });
+    clearBtn.addEventListener('click', () => { textPreview.innerHTML = ''; textPreview.focus(); });
 
     function setTextAlign(alignType) {
         currentAlign = alignType;
@@ -522,15 +479,8 @@
         document.execCommand('insertText', false, text);
     });
 
-    fontSize.addEventListener('input', (e) => { 
-        textPreview.style.fontSize = e.target.value + 'px'; 
-        sizeVal.textContent = e.target.value + 'px'; 
-    });
-    lineSpacing.addEventListener('input', (e) => { 
-        textPreview.style.lineHeight = e.target.value; 
-        lineVal.textContent = e.target.value; 
-    });
-
+    fontSize.addEventListener('input', (e) => { textPreview.style.fontSize = e.target.value + 'px'; sizeVal.textContent = e.target.value + 'px'; });
+    lineSpacing.addEventListener('input', (e) => { textPreview.style.lineHeight = e.target.value; lineVal.textContent = e.target.value; });
     textColor.addEventListener('input', (e) => { textPreview.style.color = e.target.value; });
     bgColor.addEventListener('input', (e) => { updateBackground(e.target.value); });
 
@@ -538,7 +488,6 @@
         textColor.value = txtColor; bgColor.value = backColor;
         textPreview.style.color = txtColor; updateBackground(backColor);
     }
-
     function updateBackground(color) { textPreview.style.backgroundColor = color; }
 
     fontFileInput.addEventListener('change', function(e) {
@@ -547,24 +496,16 @@
             Array.from(files).forEach(file => {
                 const fontName = 'Custom_' + file.name.replace(/\.[^/.]+$/, "").replace(/[^a-zA-Z0-9]/g, "_") + '_' + Date.now();
                 const reader = new FileReader();
-                
                 reader.onload = function(event) {
                     const fontUrl = event.target.result;
                     const customFont = new FontFace(fontName, `url(${fontUrl})`);
-                    
                     customFont.load().then(function(loadedFont) {
                         document.fonts.add(loadedFont);
-                        
                         const option = document.createElement('option');
-                        option.value = fontName;
-                        option.textContent = file.name;
+                        option.value = fontName; option.textContent = file.name;
                         fontSelect.appendChild(option);
-                        
                         fontSelect.value = fontName;
                         triggerFontChange(fontName);
-                        
-                    }).catch(function(error) {
-                        alert(`មិនអាចដំណើរការហ្វាយ Font: "${file.name}" នេះបានទេ!`);
                     });
                 };
                 reader.readAsDataURL(file);
@@ -573,24 +514,14 @@
     });
 
     fontSelect.addEventListener('change', function(e) {
-        const selectedFont = e.target.value;
-        if (selectedFont === 'default') {
-            triggerFontChange(defaultFontStack);
-        } else {
-            triggerFontChange(selectedFont);
-        }
+        triggerFontChange(e.target.value === 'default' ? defaultFontStack : e.target.value);
     });
-
-    function triggerFontChange(fontName) {
-        activeFontName = fontName;
-        textPreview.style.fontFamily = fontName;
-    }
+    function triggerFontChange(fontName) { activeFontName = fontName; textPreview.style.fontFamily = fontName; }
 
     function drawTextToCanvas(callback) {
         document.fonts.ready.then(() => {
             const text = textPreview.innerText || textPreview.textContent;
             const lines = text.split('\n');
-            
             const currentFontSize = parseInt(fontSize.value);
             const currentLineHeight = parseFloat(lineSpacing.value);
             const currentTextColor = textColor.value;
@@ -598,153 +529,77 @@
 
             const dummyCanvas = document.createElement('canvas');
             const dummyCtx = dummyCanvas.getContext('2d');
-            dummyCtx.font = `normal ${currentFontSize}px ${activeFontName}, 'Kantumruy Pro', sans-serif`;
+            dummyCtx.font = `normal ${currentFontSize}px ${activeFontName}, sans-serif`;
 
-            const lineMeasurements = lines.map(line => ({
-                text: line,
-                width: dummyCtx.measureText(line).width
-            }));
-
+            const lineMeasurements = lines.map(line => ({ text: line, width: dummyCtx.measureText(line).width }));
             let maxLineWidth = 0;
-            lineMeasurements.forEach(m => {
-                if (m.width > maxLineWidth) { maxLineWidth = m.width; }
-            });
+            lineMeasurements.forEach(m => { if (m.width > maxLineWidth) maxLineWidth = m.width; });
 
-            const paddingX = 40;
-            const paddingY = 40;
+            const paddingX = 40; const paddingY = 40;
             const baseWidth = Math.max(400, maxLineWidth + (paddingX * 2));
             const baseHeight = (lines.length * currentFontSize * currentLineHeight) + (paddingY * 2);
-            const scale = 3; 
+            const scale = 3;
 
             const canvas = document.createElement('canvas');
-            canvas.width = baseWidth * scale;
-            canvas.height = baseHeight * scale;
-            
-            const ctx = canvas.getContext('2d');
-            ctx.scale(scale, scale);
+            canvas.width = baseWidth * scale; canvas.height = baseHeight * scale;
+            const ctx = canvas.getContext('2d'); ctx.scale(scale, scale);
 
-            ctx.fillStyle = currentBgColor;
-            ctx.fillRect(0, 0, baseWidth, baseHeight);
-
-            ctx.textBaseline = "top";
-            ctx.fillStyle = currentTextColor;
-            ctx.font = `normal ${currentFontSize}px ${activeFontName}, 'Kantumruy Pro', sans-serif`;
-
-            ctx.textAlign = "left"; 
+            ctx.fillStyle = currentBgColor; ctx.fillRect(0, 0, baseWidth, baseHeight);
+            ctx.textBaseline = "top"; ctx.fillStyle = currentTextColor;
+            ctx.font = `normal ${currentFontSize}px ${activeFontName}, sans-serif`;
 
             let startY = paddingY;
             lineMeasurements.forEach((m) => {
-                let drawX = paddingX; 
-
-                if (currentAlign === "center") {
-                    drawX = (baseWidth / 2) - (m.width / 2);
-                } else if (currentAlign === "right") {
-                    drawX = baseWidth - paddingX - m.width;
-                }
-
+                let drawX = paddingX;
+                if (currentAlign === "center") drawX = (baseWidth / 2) - (m.width / 2);
+                else if (currentAlign === "right") drawX = baseWidth - paddingX - m.width;
                 ctx.fillText(m.text, drawX, startY);
                 startY += (currentFontSize * currentLineHeight);
             });
-
-            const pngUrl = canvas.toDataURL('image/png');
-            callback(pngUrl, baseWidth, baseHeight, canvas);
+            callback(canvas.toDataURL('image/png'), baseWidth, baseHeight);
         });
     }
 
     document.getElementById('saveImgBtn').addEventListener('click', () => {
         drawTextToCanvas((pngUrl) => {
-            const link = document.createElement('a');
-            link.download = 'toathmor-font-tester.png';
-            link.href = pngUrl;
-            link.click();
+            const link = document.createElement('a'); link.download = 'font-tester.png'; link.href = pngUrl; link.click();
         });
     });
 
     document.getElementById('savePdfBtn').addEventListener('click', () => {
         drawTextToCanvas((pngUrl, width, height) => {
             const { jsPDF } = window.jspdf;
-            const orientation = width > height ? 'l' : 'p';
-            const pdf = new jsPDF(orientation, 'px', [width, height]);
-            pdf.addImage(pngUrl, 'PNG', 0, 0, width, height);
-            pdf.save('toathmor-font-tester.pdf');
+            const pdf = new jsPDF(width > height ? 'l' : 'p', 'px', [width, height]);
+            pdf.addImage(pngUrl, 'PNG', 0, 0, width, height); pdf.save('font-tester.pdf');
         });
     });
 
     const themeBtn = document.getElementById('themeBtn');
     themeBtn.addEventListener('click', () => {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        if (currentTheme === 'dark') {
+        if (document.documentElement.getAttribute('data-theme') === 'dark') {
             document.documentElement.removeAttribute('data-theme');
-            themeBtn.innerHTML = '<i class="fa-solid fa-moon"></i> ងងឹត';
-            setQuickColor('#0f172a', '#ffffff');
+            themeBtn.innerHTML = '<i class="fa-solid fa-moon"></i> ងងឹត'; setQuickColor('#0f172a', '#ffffff');
         } else {
             document.documentElement.setAttribute('data-theme', 'dark');
-            themeBtn.innerHTML = '<i class="fa-solid fa-sun"></i> ភ្លឺ';
-            setQuickColor('#f8fafc', '#131c2e');
+            themeBtn.innerHTML = '<i class="fa-solid fa-sun"></i> ភ្លឺ'; setQuickColor('#f8fafc', '#131c2e');
         }
     });
 
     document.getElementById('shareBtn').addEventListener('click', () => {
-        drawTextToCanvas(async (pngUrl, width, height, canvas) => {
-            if (navigator.share && navigator.canShare) {
-                try {
-                    const response = await fetch(pngUrl);
-                    const blob = await response.blob();
-                    const file = new File([blob], 'font-test.png', { type: 'image/png' });
-
-                    if (navigator.canShare({ files: [file] })) {
-                        await navigator.share({
-                            files: [file],
-                            title: 'តារាងតេស្តពុម្ពអក្សរ - Toathmor',
-                            text: 'ខ្ញុំកំពុងតេស្តពុម្ពអក្សរនៅលើកម្មវិធី Toathmor!'
-                        });
-                        return;
-                    }
-                } catch (err) { console.log('Error sharing image:', err); }
-            }
-            
+        drawTextToCanvas(async (pngUrl) => {
             if (navigator.share) {
-                try {
-                    await navigator.share({
-                        title: 'តារាងតេស្តពុម្ពអក្សរ - Toathmor',
-                        text: 'ខ្ញុំកំពុងតេស្តពុម្ពអក្សរនៅលើកម្មវិធី Toathmor!',
-                        url: window.location.href
-                    });
-                } catch (err) { console.log('Rejected share'); }
-            } else {
-                alert('Browser មិនទាន់គាំទ្រមុខងារ Share ទេ!');
-            }
+                const response = await fetch(pngUrl); const blob = await response.blob();
+                const file = new File([blob], 'font-test.png', { type: 'image/png' });
+                if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                    await navigator.share({ files: [file], title: 'Font Tester' });
+                }
+            } else { alert('មិនទាន់គាំទ្រមុខងារ Share ទេ'); }
         });
     });
 
-    // 🌟 មុខងារទី២៖ កូដសំរាប់ Add to Home Screen (PWA Mechanism)
-    let deferredPrompt;
-    const installBtn = document.getElementById('installBtn');
-
-    window.addEventListener('beforeinstallprompt', (e) => {
-        // ទប់ស្កាត់កុំឱ្យ Chrome/Safari បង្ហាញផ្ទាំង Install មកដោយស្វ័យប្រវត្ត
-        e.preventDefault();
-        deferredPrompt = e;
-        // បង្ហាញប៊ូតុង "ដំឡើងកម្មវិធី" ឡើងមកលើ UI
-        installBtn.style.display = 'flex';
-    });
-
-    installBtn.addEventListener('click', async () => {
-        if (deferredPrompt) {
-            deferredPrompt.prompt();
-            const { outcome } = await deferredPrompt.userChoice;
-            if (outcome === 'accepted') {
-                console.log('User បានដំឡើងកម្មវិធីជោគជ័យ');
-            }
-            deferredPrompt = null;
-            installBtn.style.display = 'none';
-        }
-    });
-
-    window.addEventListener('appinstalled', () => {
-        console.log('កម្មវិធីត្រូវបានដំឡើងរួចរាល់');
-        installBtn.style.display = 'none';
-    });
+    let deferredPrompt; const installBtn = document.getElementById('installBtn');
+    window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; installBtn.style.display = 'flex'; });
+    installBtn.addEventListener('click', async () => { if (deferredPrompt) { deferredPrompt.prompt(); deferredPrompt = null; installBtn.style.display = 'none'; } });
 </script>
 
 </body>
